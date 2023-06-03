@@ -6,6 +6,8 @@
 .DS_Store
 .AppleDouble
 .LSOverride
+.문서
+문서/
 
 # Icon must end with two \r
 Icon
