@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="area_style.css">  <!--css연동-->
+        <title>모빌라이프</title>
+        <script src="area_send.js" defer></script>
+        <script> //지도
+            function initMap() {
+              const center_loc = { lat: 33.364219, lng: 126.529098 };
+              const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 10,
+                center: center_loc
+              });
+              // The marker, positioned at center_loc
+              const marker = new google.maps.Marker({
+                position: center_loc,
+                map: map
+              });
+            }
+        </script>
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="intro"> <!--홈화면 상단 -->
+                <div class="header">
+                    <div class="searchArea">
+                        <form>
+                            <input type="search" placeholder="Search">
+                            <span>검색</span>
+                        </form>
+                    </div>
+                    <ul class="nav">
+                        <li>
+                            <a href="#">홈</a>
+                            <ul class="submenu">
+                                <li><a href="#"></a></li>
+                                <li><a href="#">submenu02</a></li>
+                                <li><a href="#">submenu03</a></li>
+                                <li><a href="#">submenu04</a></li>
+                                <li><a href="#">submenu05</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">관광정보</a>
+                            <ul class="submenu">
+                                <li><a href="#">submenu01</a></li>
+                                <li><a href="#">submenu02</a></li>
+                                <li><a href="#">submenu03</a></li>
+                                <li><a href="#">submenu04</a></li>
+                                <li><a href="#">submenu05</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li>
+                            <a href="#">취업정보</a>
+                            <ul class="submenu">
+                                <li><a href="#">submenu01</a></li>
+                                <li><a href="#">submenu02</a></li>
+                                <li><a href="#">submenu03</a></li>
+                                <li><a href="#">submenu04</a></li>
+                                <li><a href="#">submenu05</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">제주살이</a>
+                            <ul class="submenu">
+                                <li><a href="#">submenu01</a></li>
+                                <li><a href="#">submenu02</a></li>
+                                <li><a href="#">submenu03</a></li>
+                                <li><a href="#">submenu04</a></li>
+                                <li><a href="#">submenu05</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="image2">
+                <img src="../image/d1.jpg" style="width:1280px; height:250px;">
+            </div>
+            <div class="colorbox">
+                <ul class="nav1">
+                <li>
+                    <div><a href="area.html">제주살이</a>
+                    </div>
+                </li>
+                <li>
+                    <div><a href="#">추천 지역</a>
+                    </div>
+                </li>
+                <li>
+                    <div><a href="#">장애인 전용 편의 시설</a>
+                    </div>
+                </li>
+            </div>
+        </div>
+
+        <div> <!-- 본문 내용 -->
+            <div>
+                <table id ㅇ="rank_area_table">
+                    <tr>
+                      <th><img src="../image/rank1.jpeg"/></th>
+                      <th>항목 1</th>
+                      <th><img src="../image/rank2.jpeg"/></th>
+                      <th>항목 2</th>
+                      <th><img src="../image/rank3.jpeg"/></th>
+                      <th>항목 3</th>
+                    </tr>
+                  </table>
+            </div>
+            <div> <!-- !!!구글 지도 구역!!! --> 
+                <script type="text/javascript" src="config.js"></script>
+                <script>
+                    const API_KEY = config.APIKEY;
+                    const url = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap&libraries=&v=weekly`;
+                    const script = document.createElement('script');
+                    script.src = url;
+                    script.async = true;
+                    script.defer = true;
+                    document.body.appendChild(script);
+                </script>
+                <div id="map"></div>
+            </div><br><br>
+            <div id="div_table"> <!-- 주거 지역 추천 -->
+                <h3 align="left">제주도 주거 추천 지역</h3><br>
+                <table id="div_area_table">
+                    <tr>
+                      <th>주거 지역(읍, 면, 동)</th>
+                      <th>점 수</th>
+                      <th>특이 사항</th>
+                      <th>비고</th>
+                    </tr>
+                    <tr>
+                      <td><a href="#" id="recommend">강정동</a></td>
+                      <td>데이터 2</td>
+                      <td>데이터 3</td>
+                      <td>데이터 4</td>
+                    </tr>
+                    <tr>
+                      <td><a href="#" id="recommend">남원읍</a></td>
+                      <td>데이터 6</td>
+                      <td>데이터 7</td>
+                      <td>데이터 8</td>
+                    </tr>
+                </table>
+            </div>
+            
+        </div>
+       
+    </body>
+</html>

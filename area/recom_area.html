@@ -5,21 +5,65 @@
         <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="area_style.css">  <!--css연동-->
         <title>모빌라이프</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-            function initMap() {
-              const center_loc = { lat: 33.364219, lng: 126.529098 };
-              const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 10,
-                center: center_loc,
-              });
-              // The marker, positioned at center_loc
-              const marker = new google.maps.Marker({
-                position: center_loc,
-                map: map,
-              });
+            const receivedData = decodeURI(location.href.split('?')[1]).split('=')[1].trim();
+            console.log(receivedData);
+        </script>
+        <script>
+            fetch("jeju_recommend.csv")
+            .then(response => response.text())
+            .then(data => {
+                console.log("성공");
+                var lines = data.split("\n");
+                var markers = []; // Array to store the markers
+                var tableHTML = "<table>";
+                for (var i = 0; i < lines.length; i++) {
+                    var cells = lines[i].split(",");
+                    if (i === 0) { //표 타이틀
+                        tableHTML += "<tr>";
+                        for (var j = 0; j < 4; j++) {
+                            tableHTML += "<th>" + cells[j] + "</th>";
+                        }
+                        tableHTML += "</tr>";
+                    }
+                    if (cells[3].trim() == receivedData) {
+                        tableHTML += "<tr>";
+                        for (var j = 0; j < 4; j++) {
+                            tableHTML += "<td>" + cells[j] + "</td>";
+                        }
+                        tableHTML += "</tr>";
+                        var marker = { lat: parseFloat(cells[5]), lng: parseFloat(cells[4]), title: cells[1]};
+                        markers.push(marker); // Add the marker to the array
+                    }
+                }
+                console.log(markers)
+                tableHTML += "</table>";
+                document.getElementById("csvTable").innerHTML = tableHTML; // Add the table to the HTML element
+                
+                // Initialize the map and add markers
+                initMap(markers);
+            })
+            .catch(error => {
+                console.log("오류 발생: " + error);
+            });
+            function initMap(markers) {
+                const center_loc = { lat: 33.364219, lng: 126.529098 };
+                map = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 10,
+                    center: center_loc
+                });
+    
+                for (var i = 0; i < markers.length; i++) {
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(markers[i].lat, markers[i].lng),
+                        map: map,
+                        title: markers[i].title
+                    });
+                }
             }
-          </script>
-    </head>
+        </script> 
+        </head> 
     <body>
         <div class="wrap">
             <div class="intro"> <!--홈화면 상단 -->
@@ -65,7 +109,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#">주거시설</a>
+                            <a href="#">제주살이</a>
                             <ul class="submenu">
                                 <li><a href="#">submenu01</a></li>
                                 <li><a href="#">submenu02</a></li>
@@ -73,93 +117,45 @@
                                 <li><a href="#">submenu04</a></li>
                                 <li><a href="#">submenu05</a></li>
                             </ul>
-
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="image2">
-                <img src="image/d1.jpg" style="width:1280px; height:250px;">
+                <img src="../image/d1.jpg" style="width:1280px; height:250px;">
             </div>
             <div class="colorbox">
                 <ul class="nav1">
                 <li>
-                    <div><a href="#">알바채용</a>
-                        <ul class="submenu1">
-                            <img src="image/v.png" style="width:20px; height:20px;">
-                            <li><a href="#">알바지도</a></li>
-                            <li><a href="#">지역별정보</a></li>
-                            <li><a href="#">급구알바</a></li>
-                            <li><a href="#">단기알바</a></li>
-                            <li><a href="#">알바후기</a></li>
-                            </img>
-                        </ul>
+                    <div><a href="area.html">제주살이</a>
                     </div>
                 </li>
                 <li>
-                    <div><a href="#">직원채용</a>
-                        <ul class="submenu1">
-                            <img src="image/v.png" style="width:20px; height:20px;">
-                                <li><a href="#">기업순위</a></li>
-                                <li><a href="#">지역별정보</a></li>
-                                <li><a href="#">신입.인턴</a></li>
-                                <li><a href="#">연봉정보</a></li>
-                                <li><a href="#">직업후기</a></li>
-                            </img>
-                        </ul>
+                    <div><a href="#">추천 지역</a>
+                    </div>
+                </li>
+                <li>
+                    <div><a href="#">장애인 전용 편의 시설</a>
                     </div>
                 </li>
             </div>
         </div>
 
         <div> <!-- 본문 내용 -->
-            <div>
-                <table id="rank_area_table">
-                    <tr>
-                      <th><img src="image/rank1.jpeg"/></th>
-                      <th>항목 1</th>
-                      <th><img src="image/rank2.jpeg"/></th>
-                      <th>항목 2</th>
-                      <th><img src="image/rank3.jpeg"/></th>
-                      <th>항목 3</th>
-                    </tr>
-                  </table>
-            </div>
-            <div> <!-- !!!구글 지도 구역 오류 발생 수정 필요함!!! -->
-                <div id="map"></div>
-                <script type="text/javascript">
+            <div> <!-- !!!구글 지도 구역!!!--> 
+                <script type="text/javascript" src="config.js"></script>
+                <script>
                     const API_KEY = config.APIKEY;
                     const url = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap&libraries=&v=weekly`;
                     const script = document.createElement('script');
                     script.src = url;
                     script.async = true;
+                    script.defer = true;
                     document.body.appendChild(script);
                 </script>
+                <div id="map"></div>  
             </div><br><br>
-            <div id="div_table"> <!-- 주거 지역 추천 -->
-                <h3 align="left">제주도 주거 추천 지역</h3><br>
-                <table id="div_area_table">
-                    <tr>
-                      <th>주거 지역(읍, 면, 동)</th>
-                      <th>점 수</th>
-                      <th>특이 사항</th>
-                      <th>비고</th>
-                    </tr>
-                    <tr>
-                      <td><a href="#">데이터 1 링크 연결</a></td>
-                      <td>데이터 2</td>
-                      <td>데이터 3</td>
-                      <td>데이터 4</td>
-                    </tr>
-                    <tr>
-                      <td><a href="#">데이터 5 링크 연결</a></td>
-                      <td>데이터 6</td>
-                      <td>데이터 7</td>
-                      <td>데이터 8</td>
-                    </tr>
-                </table>
-            </div>
-            
+            <div id="csvTable"></div> <!-- 테이블이 추가될 위치 -->
         </div>
        
     </body>
