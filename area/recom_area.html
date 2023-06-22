@@ -5,6 +5,14 @@
         <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="area_style.css">  <!--css연동-->
         <title>모빌라이프</title>
+        <style>
+            /* CSS styles for centering the table */
+            #csvTable {
+                display: grid;
+                place-items: center;
+                text-align : center;
+            }
+        </style>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             const receivedData = decodeURI(location.href.split('?')[1]).split('=')[1].trim();
@@ -17,25 +25,107 @@
                 console.log("성공");
                 var lines = data.split("\n");
                 var markers = []; // Array to store the markers
-                var tableHTML = "<table>";
+                var tableHTML = "<table id='div_area_table'>";
                 for (var i = 0; i < lines.length; i++) {
                     var cells = lines[i].split(",");
                     if (i === 0) { //표 타이틀
                         tableHTML += "<tr>";
                         for (var j = 0; j < 4; j++) {
-                            tableHTML += "<th>" + cells[j] + "</th>";
+                            tableHTML += "<th>" +  cells[j] + "</th>";
                         }
                         tableHTML += "</tr>";
                     }
                     if (cells[3].trim() == receivedData) {
                         tableHTML += "<tr>";
                         for (var j = 0; j < 4; j++) {
-                            tableHTML += "<td>" + cells[j] + "</td>";
+                            var icon = "";
+                            switch (true) {
+                                case cells[j] === "119안전센터" || cells[j] === "소방서":
+                                    icon = "fire-station.png"
+                                    break;
+                                case cells[j] === "경찰서" || cells[j] === "치안센터" || cells[j] === "파출소":
+                                    icon = "police-station.png"
+                                    break;
+                                case cells[j] === "해양경찰서" || cells[j] === "해양파출소":
+                                    icon = "captain.png"
+                                    break;
+                                case cells[j] === "병원" || cells[j] === "보건소" || cells[j] === "한의원":
+                                    icon = "hospital.png"
+                                    break;
+                                case cells[j] === "학교":
+                                    icon = "university.png"
+                                    break;
+                                case cells[j] === "기념품":
+                                    icon = "shopping-bag.png"
+                                    break;
+                                case cells[j] === "마트" || cells[j] === "쇼핑시설":
+                                    icon = "shop.png"
+                                    break;
+                                case cells[j] === "세탁소":
+                                    icon = "washing-machine.png"
+                                    break;
+                                case cells[j] === "시장":
+                                    icon = "food-stand.png"
+                                    break;
+                                case cells[j] === "약국":
+                                    icon = "pharmacy.png"
+                                    break;
+                                case cells[j] === "우체국":
+                                    icon = "mail-box.png"
+                                    break;
+                                case cells[j] === "은행":
+                                    icon = "bank.png"
+                                    break;
+                                case cells[j] === "음식점":
+                                    icon = "cafe.png"
+                                    break;
+                                case cells[j] === "자전거대여점":
+                                    icon = "bike-parking.png"
+                                    break;
+                                case cells[j] === "장애인복지시설":
+                                    icon = "wheelchair.png"
+                                    break;
+                                case cells[j] === "재활용도움센터" || cells[j] == "클린하우스" :
+                                    icon = "recycle.png"
+                                    break;
+                                case cells[j] === "전기차충전소":
+                                    icon = "electric-car.png"
+                                    break;
+                                case cells[j] === "주유소":
+                                    icon = "refuel.png"
+                                    break;
+                                case cells[j] === "주차장":
+                                    icon = "parking.png"
+                                    break;
+                                case cells[j] === "카페":
+                                    icon = "sign.png"
+                                    break;
+                                case cells[j] === "특산물판매점":
+                                    icon = "stall.png"
+                                    break;
+                                case cells[j] === "편의점":
+                                    icon = "shop (1).png"
+                                    break;
+                                case cells[j] === "화장실":
+                                    icon = "toilet.png"
+                                    break;
+                                case cells[j] === "ATM":
+                                    icon = "atm-machine.png"
+                                    break;
+                                default:
+                                    icon = "";
+                                    break;
+                            }
+                            if (icon == "") {
+                                tableHTML += "<td>" + cells[j] + "</td>";
+                            } else {
+                                tableHTML += "<td>" + "<img src='../image/" + icon + "' style='width:50px; height:50px;'/><br>" + cells[j] + "</td>";
+                            }
                         }
                         tableHTML += "</tr>";
                         var marker = { lat: parseFloat(cells[5]), lng: parseFloat(cells[4]), title: cells[1]};
                         markers.push(marker); // Add the marker to the array
-                    }
+                    } //!!!!!!!!!!!! 구글 지도에 마커 표시 안됨..!!!!!!!!
                 }
                 console.log(markers)
                 tableHTML += "</table>";
@@ -126,18 +216,18 @@
             </div>
             <div class="colorbox">
                 <ul class="nav1">
-                <li>
-                    <div><a href="area.html">제주살이</a>
-                    </div>
-                </li>
-                <li>
-                    <div><a href="#">추천 지역</a>
-                    </div>
-                </li>
-                <li>
-                    <div><a href="#">장애인 전용 편의 시설</a>
-                    </div>
-                </li>
+                    <li>
+                        <div><a href="area.html">제주살이</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div><a href="recom_area.html?data=강정동">추천 지역</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div><a href="#">장애인 전용 편의 시설</a>
+                        </div>
+                    </li>
             </div>
         </div>
 

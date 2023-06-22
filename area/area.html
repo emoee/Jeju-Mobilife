@@ -5,8 +5,42 @@
         <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="area_style.css">  <!--css연동-->
         <title>모빌라이프</title>
-        <script src="area_send.js" defer></script>
-        <script> //지도
+        <script>
+            fetch("jeju_dong.csv")
+            .then(response => response.text())
+            .then(data => {
+                var lines = data.split("\n");
+                var tableHTML = "<table>";
+                tableHTML += `<tr>
+                                <th>주거 지역</th>
+                                <th>점 수</th>
+                                <th>특이 사항</th>
+                                <th>비고</th>
+                              </tr>`;
+                for (var i = 1; i < lines.length; i++) { // Start from the second row
+                    var cells = lines[i].split(",");
+                    tableHTML += "<tr>";
+                    tableHTML += "<td><a href='#' class='recommend'>" + cells[1] + "</td>";
+                    tableHTML += "<td>" + cells[4] + "</td>";
+                    tableHTML += "</tr>";
+                }
+                tableHTML += "</table>";
+                document.getElementById("div_area_table").innerHTML = tableHTML; // Add the table to the HTML element
+            
+                // Add event listeners to the 'recommend' class links
+                var aTags = document.getElementsByClassName('recommend');
+                for (var i = 0; i < aTags.length; i++) {
+                aTags[i].addEventListener('click', function() {
+                    var aText = this.textContent;
+                    location.href = `recom_area.html?data=${encodeURIComponent(aText)}`;
+                });
+                }
+            })
+            .catch(error => {
+                console.log("오류 발생: " + error);
+            });
+
+            //지도
             function initMap() {
               const center_loc = { lat: 33.364219, lng: 126.529098 };
               const map = new google.maps.Map(document.getElementById("map"), {
@@ -86,7 +120,7 @@
                     </div>
                 </li>
                 <li>
-                    <div><a href="#">추천 지역</a>
+                    <div><a href="recom_area.html?data=강정동">추천 지역</a>
                     </div>
                 </li>
                 <li>
@@ -98,7 +132,7 @@
 
         <div> <!-- 본문 내용 -->
             <div>
-                <table id ㅇ="rank_area_table">
+                <table id ="rank_area_table">
                     <tr>
                       <th><img src="../image/rank1.jpeg"/></th>
                       <th>항목 1</th>
@@ -132,13 +166,13 @@
                       <th>비고</th>
                     </tr>
                     <tr>
-                      <td><a href="#" id="recommend">강정동</a></td>
+                      <td><a href="#" class="recommend">강정동</a></td>
                       <td>데이터 2</td>
                       <td>데이터 3</td>
                       <td>데이터 4</td>
                     </tr>
                     <tr>
-                      <td><a href="#" id="recommend">남원읍</a></td>
+                      <td><a href="#" class="recommend">남원읍</a></td>
                       <td>데이터 6</td>
                       <td>데이터 7</td>
                       <td>데이터 8</td>
@@ -147,6 +181,7 @@
             </div>
             
         </div>
-       
+        
     </body>
+    <script src="area_send.js" defer></script>
 </html>

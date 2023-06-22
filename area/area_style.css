@@ -29,6 +29,7 @@
   
 #div_area_table th, #div_area_table td {
     padding: 10px;
+    border: 1px solid black;
   }
 
 a { text-decoration:none }

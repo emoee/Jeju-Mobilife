@@ -1,5 +1,15 @@
-const aTag = document.getElementById('recommend');
-aTag.addEventListener('click', function() {
-    const aText = this.textContent;
-    location.href = `recom_area.html?data=${encodeURIComponent(aText)}`;
-});
+window.onload = function() {    // Your JavaScript code here
+    var aTags = document.getElementsByClassName('recommend');
+    if (aTags) {
+        for (var i = 0; i < aTags.length; i++) {
+        aTags[i].addEventListener('click', function() {
+            var aText = this.textContent;
+            console.log(aText)
+            location.href = `recom_area.html?data=${encodeURIComponent(aText)}`;
+        });
+        }
+    }
+    else {
+        console.log(aTags)
+    }
+}
