@@ -20,7 +20,7 @@
         </style>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script type="text/javascript" src="config.js"></script>
-        <script> //구글 지도 //!!!!!!!!!!!! 지도가 사라졌다... .....ㅎ.........ㅠㅠㅠㅜㅜㅜㅠㅠㅠ
+        <script> //구글 지도
             const markers = []
             var map = 0
             const receivedData = decodeURI(location.href.split('?')[1]).split('=')[1].trim();
@@ -39,8 +39,8 @@
 
             function Mapload(marker_array, infowindow) {
                 console.log("마커 생성");
+                console.log(marker_array.length);
                 for (var i = 0; i < marker_array.length; i++) {
-                    console.log(i)
                     var marker = new google.maps.Marker({
                         map: map,
                         title: marker_array[i].title,
@@ -49,20 +49,20 @@
                     marker.setMap(map);
                     map.setCenter(new google.maps.LatLng(marker_array[i].lat, marker_array[i].lng));
                     map.setZoom(11);
-                    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                    marker.addListener('click', (function(marker, i) {
                         return function() {
-                            
-                            //html로 표시될 인포 윈도우의 내용
-                            infowindow.setContent(marker_array[i].title);
-                            
-                            //인포윈도우가 표시될 위치
-                            infowindow.open(map, marker);
+                          //html로 표시될 인포 윈도우의 내용
+                          infowindow.setContent(marker_array[i].title);
+                          
+                          //인포윈도우가 표시될 위치
+                          infowindow.open(map, marker);
                         }
-                    })(marker, i));
+                      })(marker, i), { passive: true });
+                      
                 }
             }
         </script>
-        <script> 
+        <script> //csv 파일
             fetch("jeju_recommend.csv")
             .then(response => response.text())
             .then(data => {
@@ -78,7 +78,7 @@
                         }
                         tableHTML += "</tr>";
                     }
-                    if (cells[3] == receivedData) {
+                    if (cells[3].trim() == receivedData) {
                         tableHTML += "<tr>";
                         for (var j = 0; j < 4; j++) {
                             var icon = "";
@@ -189,50 +189,21 @@
                             <input type="search" placeholder="Search">
                             <span>검색</span>
                         </form>
-                        
                     </div>
-                    
                     <ul class="nav">
                         <li>
                             <a href="#">홈</a>
-                            <ul class="submenu">
-                                <li><a href="#"></a></li>
-                                <li><a href="#">submenu02</a></li>
-                                <li><a href="#">submenu03</a></li>
-                                <li><a href="#">submenu04</a></li>
-                                <li><a href="#">submenu05</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#">관광정보</a>
-                            <ul class="submenu">
-                                <li><a href="#">submenu01</a></li>
-                                <li><a href="#">submenu02</a></li>
-                                <li><a href="#">submenu03</a></li>
-                                <li><a href="#">submenu04</a></li>
-                                <li><a href="#">submenu05</a></li>
-                            </ul>
                         </li>
                         
                         <li>
                             <a href="#">취업정보</a>
-                            <ul class="submenu">
-                                <li><a href="#">submenu01</a></li>
-                                <li><a href="#">submenu02</a></li>
-                                <li><a href="#">submenu03</a></li>
-                                <li><a href="#">submenu04</a></li>
-                                <li><a href="#">submenu05</a></li>
-                            </ul>
                         </li>
                         <li>
                             <a href="#">제주살이</a>
-                            <ul class="submenu">
-                                <li><a href="#">submenu01</a></li>
-                                <li><a href="#">submenu02</a></li>
-                                <li><a href="#">submenu03</a></li>
-                                <li><a href="#">submenu04</a></li>
-                                <li><a href="#">submenu05</a></li>
-                            </ul>
                         </li>
                     </ul>
                 </div>
