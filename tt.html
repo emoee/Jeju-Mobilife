@@ -5,35 +5,45 @@
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="tour.css">  <!--css연동-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script>
-        // JavaScript
-        $(document).ready(function(){
-        $("#map1").click(function(){
-            rotateElement("#map1");
-        });
-        
-        $("#map2").click(function(){
-            rotateElement("#map2");
-        });
-        
-        $("#map3").click(function(){
-            rotateElement("#map3");
-        });
-        
-        $("#map4").click(function(){
-            rotateElement("#map4");
-        });
-        });
+    <script type="text/JavaScript">
+        var fileName = "tourdata2";
+        var parseName = "";
+    
+        parseName = fileName + '.tsv';    // 파일 경로 + sequence + 확장자
+    
+        $.ajax({
+    url: parseName,
+    dataType: 'text',
+    success: function(data) {
+        var allRow = data.split(/\r?\n|\r/);
+        var columnData = [];
 
-        function rotateElement(elementSelector) {
-            var element = $(elementSelector);
-            element.animate({
-                right: '250px'
-            });
+        for (var singleRow = 1; singleRow < allRow.length; singleRow++) {
+            var collapse = allRow[singleRow].split("\t");
+            
+            if (collapse.length > 0) {
+                var rowData = collapse.map(function(column) {
+                    return column.trim();
+                });
+
+                columnData.push(rowData);
+            }
         }
 
+        console.log(columnData); // 배열에 저장된 데이터 확인
 
-        </script>
+        var textLine = columnData.join("\n");
+        $('#textArea').append(textLine);
+        $('#textArea').append("<br>");
+        // 또는 배열을 다른 곳에서 사용할 수 있도록 전역 변수에 저장
+        // var globalArray = columnData;
+        
+        // 원하는 동작 수행
+    }
+});
+
+    </script>
+    
     <title>모빌라이프</title>
 </head>
 <body>
@@ -96,41 +106,9 @@
             <!-- 지도 -->
             <hr>
             </div>
-            <div class="grid-container">
-                <ul class="tour_list">
-                    <li><a href="#">list1</a></li>
-                    <li><a href="#">list2</a></li>
-                    <li><a href="#">list3</a></li>
-                    <li><a href="#">list4</a></li>
-                    <li><a href="#">list5</a></li>
-                </ul>
-                <div class="map_sample">
-                <img src="sample.png" width="100%" height="600">
-                </div>
-            </div>
-            <hr>
-            <!--맵 내용-->
-            <div class="grid-container2">
-                <div class="map1" id="map1">
-                    <img src="sample.png" width="100%" height="300">
-                </div>
-                <div class="map2" id="map2">
-                    <img src="sample.png" width="100%" height="300">
-                </div>
-                <div class="map3" id="map3">
-                    <img src="sample.png" width="100%" height="300">
-                </div>
-                <div class="map4" id="map4">
-                    <img src="sample.png" width="100%" height="300">
-                </div>
-            </div>
+            <div id="textArea"></div>
+
             
-            <h2>This is a heading</h2>
-
-            <p>This is a paragraph.</p>
-            <p>This is another paragraph.</p>
-
-            <button>Click me</button>
 
 </body>
 </html>
