@@ -12,23 +12,57 @@
                 place-items: center;
                 text-align : center;
             }
+            #map_canvas {
+                height: 500px;
+                margin: 0 auto; /* 수평 가운데 정렬 */
+                width: 55%;
+            }
         </style>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script type="text/javascript" src="config.js"></script>
-        <script> //구글 지도 //!!!!!!!!!!!! 구글 지도에 마커 표시 안됨..!!!!!!!!
-            var map;
+        <script> //구글 지도 //!!!!!!!!!!!! 지도가 사라졌다... .....ㅎ.........ㅠㅠㅠㅜㅜㅜㅠㅠㅠ
+            const markers = []
+            var map = 0
             const receivedData = decodeURI(location.href.split('?')[1]).split('=')[1].trim();
             console.log(receivedData);
 
             function initMap() {
                 console.log("지도 생성");
                 const center_loc = { lat: 33.364219, lng: 126.529098 };
+                const infowindow = new google.maps.InfoWindow();
                 map = new google.maps.Map(document.getElementById("map_canvas"), {
                     zoom: 10,
-                    center: center_loc
+                    center: center_loc,
                 });
+                Mapload(markers, infowindow)
             }
 
+            function Mapload(marker_array, infowindow) {
+                console.log("마커 생성");
+                for (var i = 0; i < marker_array.length; i++) {
+                    console.log(i)
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        title: marker_array[i].title,
+                        position: new google.maps.LatLng(marker_array[i].lat, marker_array[i].lng),
+                    });   
+                    marker.setMap(map);
+                    map.setCenter(new google.maps.LatLng(marker_array[i].lat, marker_array[i].lng));
+                    map.setZoom(11);
+                    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                        return function() {
+                            
+                            //html로 표시될 인포 윈도우의 내용
+                            infowindow.setContent(marker_array[i].title);
+                            
+                            //인포윈도우가 표시될 위치
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
+                }
+            }
+        </script>
+        <script> 
             fetch("jeju_recommend.csv")
             .then(response => response.text())
             .then(data => {
@@ -44,7 +78,7 @@
                         }
                         tableHTML += "</tr>";
                     }
-                    if (cells[3].trim() == receivedData) {
+                    if (cells[3] == receivedData) {
                         tableHTML += "<tr>";
                         for (var j = 0; j < 4; j++) {
                             var icon = "";
@@ -61,8 +95,11 @@
                                 case cells[j] === "병원" || cells[j] === "보건소" || cells[j] === "한의원":
                                     icon = "hospital.png"
                                     break;
-                                case cells[j] === "학교":
+                                case cells[j] === "초등학교" || cells[j] === "중학교" || cells[j] === "고등학교":
                                     icon = "university.png"
+                                    break;
+                                case cells[j] === "유치원":
+                                    icon = "kindergarten.png"
                                     break;
                                 case cells[j] === "기념품":
                                     icon = "shopping-bag.png"
@@ -91,7 +128,7 @@
                                 case cells[j] === "자전거대여점":
                                     icon = "bike-parking.png"
                                     break;
-                                case cells[j] === "장애인복지시설":
+                                case cells[j] === "복지시설":
                                     icon = "wheelchair.png"
                                     break;
                                 case cells[j] === "재활용도움센터" || cells[j] == "클린하우스" :
@@ -132,30 +169,15 @@
                             }
                         }
                         tableHTML += "</tr>";
-                        var marker = { lat: cells[5], lng: cells[4], title: cells[1]};
-                    
-                        //Mapload(marker)
+                        markers.push({ lat: cells[5], lng: cells[4], title: cells[1]});
                     }
                 }
                 tableHTML += "</table>";
                 document.getElementById("csvTable").innerHTML = tableHTML; // Add the table to the HTML element
-                
             })
             .catch(error => {
                 console.log("오류 발생: " + error);
             }); 
-            
-            function Mapload(marker) {
-                console.log("마커 생성");
-                console.log(marker)
-                var loc = new google.maps.LatLng(parseFloat(marker.lat), parseFloat(marker.lng));
-                var map_marker = new google.maps.Marker({
-                    map: map,
-                    position: loc,
-                    title: marker.title
-                });
-                console.log(5)
-            }
         </script>
         </head> 
     <body>
@@ -225,7 +247,7 @@
                         </div>
                     </li>
                     <li>
-                        <div><a href="recom_area.html?data=강정동">추천 지역</a>
+                        <div><a href="area_table.html">추천 지역</a>
                         </div>
                     </li>
                     <li>
@@ -234,21 +256,17 @@
                     </li>
             </div>
         </div>
-        
-
         <div> <!-- 본문 내용 -->
             <div id="map_canvas"></div><br><br> <!-- !!!구글 지도 구역!!!--> 
-            <script>
-                const API_KEY = config.APIKEY;
-                const url = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap&libraries=&v=weekly`;
-                const script = document.createElement('script');
-                script.src = url;
-                script.async = true;
-                script.defer = true;
-                document.body.appendChild(script);
-            </script>
             <div id="csvTable"></div> <!-- 테이블이 추가될 위치 -->
         </div>
-       
+        <script>
+            const API_KEY = config.APIKEY;
+            const url = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap&libraries=&v=weekly`;
+            const script = document.createElement('script');
+            script.src = url;
+            script.async = true;
+            document.body.appendChild(script);
+        </script>
     </body>
 </html>

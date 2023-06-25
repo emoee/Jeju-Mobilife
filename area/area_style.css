@@ -8,7 +8,7 @@
     color: #000;
 }
 #map_canvas {
-    height: 50%;
+    height: 500px;
     margin: 0 auto; /* 수평 가운데 정렬 */
     width: 55%;
 }
