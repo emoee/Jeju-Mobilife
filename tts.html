@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="tour.css">  <!--css연동-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        // JavaScript
+        $(document).ready(function(){
+        $("#map1").click(function(){
+            rotateElement("#map1");
+        });
+        
+        $("#map2").click(function(){
+            rotateElement("#map2");
+        });
+        
+        $("#map3").click(function(){
+            rotateElement("#map3");
+        });
+        
+        $("#map4").click(function(){
+            rotateElement("#map4");
+        });
+        });
+
+        function rotateElement(elementSelector) {
+            var element = $(elementSelector);
+            element.animate({
+                right: '250px'
+            });
+        }
+
+
+        </script>
+    <title>모빌라이프</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="wrap">
+        <div class="intro"> <!--홈화면 상단 -->
+            <div class="header">
+                <div class="searchArea">
+                    <form>
+                        <input type="search" placeholder="Search">
+                        <span>검색</span>
+                    </form>
+                    
+                </div>
+                
+                <ul class="nav">
+                    <li>
+                        <a href="home.html">홈</a>
+                        <ul class="submenu">
+                            <li><a href="#"></a></li>
+                            <li><a href="#">submenu02</a></li>
+                            <li><a href="#">submenu03</a></li>
+                            <li><a href="#">submenu04</a></li>
+                            <li><a href="#">submenu05</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">관광정보</a>
+                        <ul class="submenu">
+                            <li><a href="#">submenu01</a></li>
+                            <li><a href="#">submenu02</a></li>
+                            <li><a href="#">submenu03</a></li>
+                            <li><a href="#">submenu04</a></li>
+                            <li><a href="#">submenu05</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="#">취업정보</a>
+                        <ul class="submenu">
+                            <li><a href="#">submenu01</a></li>
+                            <li><a href="#">submenu02</a></li>
+                            <li><a href="#">submenu03</a></li>
+                            <li><a href="#">submenu04</a></li>
+                            <li><a href="#">submenu05</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">주거시설</a>
+                        <ul class="submenu">
+                            <li><a href="#">submenu01</a></li>
+                            <li><a href="#">submenu02</a></li>
+                            <li><a href="#">submenu03</a></li>
+                            <li><a href="#">submenu04</a></li>
+                            <li><a href="#">submenu05</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                </div>
+            </div>
+            </div>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7">
+                        <img src="sample.png" style="width: 100%; height: auto;">
+                    </div>
+                    <div class="col-md-5">
+                        <p>상세내용</p>
+                        <p>상세내용</p>
+                        <p>상세내용</p>
+                        <p>상세내용</p>
+                        <p>상세내용</p>
+                        <p>상세내용</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-5">
+                        <p>무장애 여행</p>
+                        <p>무장애 여행</p>
+                        <p>무장애 여행</p>
+                        <p>무장애 여행</p>
+                    </div>
+                    <div class="col-md-7">
+                        <img src="sample.png">
+                        <img src="sample.png">
+                        <img src="sample.png">
+                        <img src="sample.png">
+                    </div>
+                </div>
+                <hr>
+            </div>
+            
+            
+</div>
+</body>
+</html>

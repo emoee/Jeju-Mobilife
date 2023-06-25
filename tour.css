@@ -263,7 +263,7 @@ h2 {
 
 .grid-container {
     display: grid;
-    grid-template-columns: 80px auto;
+    grid-template-columns: 100px auto;
     gap: 10px;
 
 }
@@ -275,6 +275,20 @@ h2 {
 .tour_list {
     text-align: left;
     margin-top: 20px;
+    margin-left: 20px;
     margin-bottom: 20px;
     width: 30%;
 }
+
+.grid-container2 {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  .grid-container2 > div {
+    text-align: center;
+  }
+
+  
