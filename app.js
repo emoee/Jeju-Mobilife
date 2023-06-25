@@ -7,8 +7,8 @@ app.listen(8080, function(){
 });
 
 // Serve static files from the "public" directory
-app.use(express.static(__dirname + "/Jeju-Mobilife"));
-
+app.use(express.static(__dirname + "/image"));
+app.use(express.static(__dirname + "/area"));
 // Define routes
 app.get("/", function(req, res){
     console.log("req.ip => " + req.ip);
