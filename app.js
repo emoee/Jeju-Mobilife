@@ -14,9 +14,9 @@ app.listen(3000, function(){
 app.get("/", function(req, res){
     console.log("req.ip => " + req.ip);
     console.log("req.hostname => " + req.hostname);
-    res.sendFile(__dirname + "./home.html");
+    res.sendFile(__dirname + "/home.html");
 });
 
 app.get("/area", function(req, res){
-    res.sendFile(__dirname + "./area/area.html");
+    res.sendFile(__dirname + "/area/area.html");
 });
