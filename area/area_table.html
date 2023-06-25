@@ -44,7 +44,7 @@
                 for (var i = 0; i < aTags.length; i++) {
                 aTags[i].addEventListener('click', function() {
                     var aText = this.textContent;
-                    location.href = `recommend_area.html?data=${encodeURIComponent(aText)}`;
+                    location.href = `/area/recommend_area.html?data=${encodeURIComponent(aText)}`;
                 });
                 }
             })
@@ -76,22 +76,19 @@
                             <a href="#">취업정보</a>
                         </li>
                         <li>
-                            <a href="#">제주살이</a>
+                            <a href="/area/area.html">제주살이</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="image2">
-                <img src="../image/d1.jpg" style="width:1280px; height:250px;">
-            </div>
             <div class="colorbox">
                 <ul class="nav1">
                 <li>
-                    <div><a href="area.html">제주살이</a>
+                    <div><a href="/area/area.html">제주살이</a>
                     </div>
                 </li>
                 <li>
-                    <div><a href="area_table.html">추천 지역</a>
+                    <div><a href="/area/area_table.html">추천 지역</a>
                     </div>
                 </li>
                 <li>
