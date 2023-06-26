@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>TSV 파일 로드 예시</title>
+  <style>
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    .table th, .table td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+    .table th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <div id="table-container"></div>
+
+  <script>
+    fetch('tourdata2.tsv')
+      .then(response => response.text())
+      .then(data => {
+        // TSV 데이터 파싱
+        const rows = data.split('\n');
+        const tableData = rows.map(row => row.split('\t'));
+
+        // HTML 테이블 생성
+        const table = document.createElement('table');
+        table.classList.add('table'); // 선택적으로 CSS 클래스 추가
+
+        // 테이블 헤더 생성
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        tableData[0].forEach(header => {
+          const th = document.createElement('th');
+          th.textContent = header;
+          headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        // 테이블 본문 생성
+        const tbody = document.createElement('tbody');
+        for (let i = 1; i < tableData.length; i++) {
+          const row = document.createElement('tr');
+          tableData[i].forEach(cell => {
+            const td = document.createElement('td');
+            td.textContent = cell;
+            row.appendChild(td);
+          });
+          tbody.appendChild(row);
+        }
+        table.appendChild(tbody);
+
+        // 테이블을 원하는 곳에 추가
+        const container = document.getElementById('table-container');
+        container.appendChild(table);
+      })
+      .catch(error => {
+        // 오류 처리
+        console.error(error);
+      });
+  </script>
+</body>
+</html>

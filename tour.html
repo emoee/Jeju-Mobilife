@@ -5,35 +5,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="tour.css">  <!--css연동-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script>
-        // JavaScript
-        $(document).ready(function(){
-        $("#map1").click(function(){
-            rotateElement("#map1");
-        });
-        
-        $("#map2").click(function(){
-            rotateElement("#map2");
-        });
-        
-        $("#map3").click(function(){
-            rotateElement("#map3");
-        });
-        
-        $("#map4").click(function(){
-            rotateElement("#map4");
-        });
-        });
-
-        function rotateElement(elementSelector) {
-            var element = $(elementSelector);
-            element.animate({
-                right: '250px'
-            });
-        }
-
-
-        </script>
     <title>모빌라이프</title>
 </head>
 <body>
@@ -124,6 +95,7 @@
                     <img src="sample.png" width="100%" height="300">
                 </div>
             </div>
+            <script src="app.js"></script>
             
             <h2>This is a heading</h2>
 
