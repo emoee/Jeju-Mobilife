@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #map_canvas {
+            height: 500px;
+            margin: 0 auto; /* 수평 가운데 정렬 */
+            width: 55%;
+        }
+        #div_area_table {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="map_canvas"></div>
+
+    <script>
+        const markers = [];
+        var map = 0;
+
+        // TSV 파일 로드 함수
+        function loadTSV(url, callback) {
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    callback(xhr.responseText);
+                }
+            };
+            xhr.open("GET", url, true);
+            xhr.send();
+        }
+
+        // 클릭 이벤트 핸들러
+        function handleMarkerClick(placeId) {
+            window.location.href = `/places/${placeId}`;
+        }
+
+        // 지도
+        function initMap() {
+            const center_loc = { lat: 33.364219, lng: 126.529098 };
+            const infowindow = new google.maps.InfoWindow();
+            map = new google.maps.Map(document.getElementById("map_canvas"), {
+                zoom: 10,
+                center: center_loc
+            });
+
+            // TSV 파일 경로
+            const tsvFile = "tourdata.tsv";
+
+            // TSV 파일 로드 후 핑 생성
+            loadTSV(tsvFile, function (tsvData) {
+                const tsvRows = tsvData.split(/\r?\n|\r/);
+                for (let i = 1; i < tsvRows.length; i++) { // 첫 번째 행은 헤더로 생략
+                    const data = tsvRows[i].split("\t");
+                    const name = data[0];
+                    const lat = parseFloat(data[1]);
+                    const lng = parseFloat(data[2]);
+                    const placeId = data[3];
+                    const marker = new google.maps.Marker({
+                        position: { lat, lng },
+                        map: map
+                    });
+                    marker.addListener("click", function () {
+                        handleMarkerClick(placeId);
+                    });
+                    markers.push(marker);
+                }
+            });
+        }
+    </script>
+
+    <script type="text/javascript" src="config.js"></script>
+    <script>
+        const API_KEY = config.APIKEY;
+        const url = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap&libraries=&v=weekly`;
+        const script = document.createElement('script');
+        script.src = url;
+        script.async = true;
+        script.defer = true;
+        document.body.appendChild(script);
+    </script>
+</body>
+</html>

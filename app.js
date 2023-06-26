@@ -4,6 +4,8 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
+app.set('view engine', 'ejs');
+
 app.listen(8080, function(){
     console.log((new Date()).toLocaleString());
     console.log("Listening on 8080");
@@ -14,6 +16,30 @@ app.use('/image', express.static(__dirname + '/image'));
 
 // Serve static files from the "area" directory
 app.use('/area', express.static(__dirname + '/area'));
+
+app.get("/area.html", (req, res) => {
+  const template = fs.readFileSync('menu.ejs', 'utf-8');
+  const rendered = ejs.render(template, { name: '' });
+  const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
+
+  const htmlFilePath = './public/area.html';
+  const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
+  const finalHtml = htmlWithLink + htmlContent;
+
+  res.send(finalHtml);
+});
+
+app.get("/map.html", (req, res) => {
+  const template = fs.readFileSync('menu.ejs', 'utf-8');
+  const rendered = ejs.render(template, { name: '' });
+  const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
+
+  const htmlFilePath = './public/map.html';
+  const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
+  const finalHtml = htmlWithLink + htmlContent;
+
+  res.send(finalHtml);
+});
 
 app.use(express.static('public'));
 
@@ -28,7 +54,7 @@ app.get('/tour.html', (req, res) => {
     const tsvFilePath = './tourdata2.tsv';
     // TSV 파일 읽기
     const template = fs.readFileSync('menu.ejs', 'utf-8');
-    const rendered = ejs.render(template, { name: 'John' });
+    const rendered = ejs.render(template, { name: '' });
   
     fs.readFile(tsvFilePath, 'utf-8', (err, data) => {
       if (err) {
@@ -74,7 +100,7 @@ app.get('/tour.html', (req, res) => {
     const tsvFilePath = './tourdata2.tsv';
     const id = req.params.id;
     const template = fs.readFileSync('menu.ejs', 'utf-8');
-    const rendered = ejs.render(template, { name: 'John' });
+    const rendered = ejs.render(template, { name: '../' });
   
     // TSV 파일 읽기
     fs.readFile(tsvFilePath, 'utf-8', (err, data) => {
@@ -103,7 +129,8 @@ app.get('/tour.html', (req, res) => {
       if (id >= 0 && id < places.length) {
         // 선택한 명소의 상세 정보 출력
         const place = places[id];
-        let output = `<h1>${place.명소}</h1>`;
+
+        let output = `<div class="detail_container"><h1>${place.명소}</h1>`;
         const img = `../img/${places[id].명소}.jpeg`;
         output += `<img src="${img}">`;
   
@@ -113,6 +140,7 @@ app.get('/tour.html', (req, res) => {
   
         const cssFilePath = '../tour.css';
         output += `<link rel="stylesheet" type="text/css" href="${cssFilePath}">`;
+        output += `</div>`
   
         res.send(rendered + output);
       } else {

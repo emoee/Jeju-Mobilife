@@ -315,4 +315,7 @@ h2 {
     background-color: #000;
     /* 추가적인 스타일링을 원한다면 여기에 적용합니다 */
 }
-  
+
+.detail_container{
+    text-align: center;
+}

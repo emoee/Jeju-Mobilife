@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="area_style.css">  <!--css연동-->
+        <title>모빌라이프</title>
+        <style>
+            #map_canvas {
+                height: 500px;
+                margin: 0 auto; /* 수평 가운데 정렬 */
+                width: 55%;
+            }
+            #div_area_table {
+                text-align : center;
+              }
+        </style>
+        <script>
+            fetch("jeju_dong.csv")
+            .then(response => response.text())
+            .then(data => {
+                var lines = data.split("\n");
+                var tableHTML = "<table>";
+                tableHTML += `<tr>
+                                <th>주거 지역</th>
+                                <th>순위</th>
+                                <th>백분위</th>
+                                <th>행정시</th>
+                              </tr>`;
+                for (var i = 1; i < lines.length; i++) { // Start from the second row
+                    var cells = lines[i].split(",");
+                    tableHTML += "<tr>";
+                    tableHTML += "<td><a href='#' class='recommend'>" + cells[1] + "</td>";
+                    tableHTML += "<td>" + cells[12] + "</td>";
+                    tableHTML += "<td><progress value='" + cells[11] + "' max='100'></progress></td>";
+                    tableHTML += "<td>" + cells[0] + "</td>";
+                    tableHTML += "</tr>";
+                }
+                tableHTML += "</table>";
+                document.getElementById("div_area_table").innerHTML = tableHTML; // Add the table to the HTML element
+            
+                // Add event listeners to the 'recommend' class links
+                var aTags = document.getElementsByClassName('recommend');
+                for (var i = 0; i < aTags.length; i++) {
+                aTags[i].addEventListener('click', function() {
+                    var aText = this.textContent;
+                    location.href = `/area/recommend_area.html?data=${encodeURIComponent(aText)}`;
+                });
+                }
+            })
+            .catch(error => {
+                console.log("오류 발생: " + error);
+            });
+        </script>
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="intro"> <!--홈화면 상단 -->
+                <div class="header">
+                    <div class="searchArea">
+                        <form>
+                            <input type="search" placeholder="Search">
+                            <span>검색</span>
+                        </form>
+                    </div>
+                    <ul class="nav">
+                        <li>
+                            <a href="/">홈</a>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="tour.html">관광정보</a>
+                        </li>
+                        
+                        <li>
+                            <a href="#">취업정보</a>
+                        </li>
+                        <li>
+                            <a href="/area.html">제주살이</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="colorbox">
+                <ul class="nav1">
+                <li>
+                    <div><a href="/area.html">제주살이</a>
+                    </div>
+                </li>
+                <li>
+                    <div><a href="/area_table.html">추천 지역</a>
+                    </div>
+                </li>
+                <li>
+                    <div><a href="#">장애인 전용 편의 시설</a>
+                    </div>
+                </li>
+            </div>
+        </div>
+
+        <div> <!-- 본문 내용 -->
+            <br><br>
+            <div id="div_table"> <!-- 주거 지역 추천 -->
+                <h3 align="left">제주도 주거 추천 지역</h3><br>
+                <h6 align="left">* 아래 읍면동은 최근 3년 이내에 아파트 매매가 이루어진 지역을 대상으로 선정하였습니다.</h3>
+                <table id="div_area_table">
+                </table><br>
+            </div>
+            
+        </div>
+        
+    </body>
+    <script src="area_send.js" defer></script>
+</html>
