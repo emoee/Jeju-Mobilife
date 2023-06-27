@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="area_style.css">  <!--css연동-->
+        <link rel="stylesheet" type="text/css" href="../css/area_style.css">  <!--css연동-->
         <title>모빌라이프</title>
         <style>
             /* CSS styles for centering the table */
@@ -19,7 +19,7 @@
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script type="text/javascript" src="config.js"></script>
+        <script type="text/javascript" src="../js/config.js"></script>
         <script> //구글 지도
             const markers = []
             var map = 0
@@ -63,7 +63,7 @@
             }
         </script>
         <script> //csv 파일
-            fetch("jeju_recommend.csv")
+            fetch("../data/jeju_recommend.csv")
             .then(response => response.text())
             .then(data => {
                 console.log("성공");
@@ -181,55 +181,12 @@
         </script>
         </head> 
     <body>
-        <div class="wrap">
-            <div class="intro"> <!--홈화면 상단 -->
-                <div class="header">
-                    <div class="searchArea">
-                        <form>
-                            <input type="search" placeholder="Search">
-                            <span>검색</span>
-                        </form>
-                    </div>
-                    <ul class="nav">
-                        <li>
-                            <a href="#">홈</a>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">관광정보</a>
-                        </li>
-                        
-                        <li>
-                            <a href="#">취업정보</a>
-                        </li>
-                        <li>
-                            <a href="/area/area.html">제주살이</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="image2">
-                <img src="../image/d1.jpg" style="width:1280px; height:250px;">
-            </div>
-            <div class="colorbox">
-                <ul class="nav1">
-                <li>
-                    <div><a href="/area/area.html">제주살이</a>
-                    </div>
-                </li>
-                <li>
-                    <div><a href="/area/area_table.html">추천 지역</a>
-                    </div>
-                </li>
-                <li>
-                    <div><a href="#">장애인 전용 편의 시설</a>
-                    </div>
-                </li>
-            </div>
-        </div>
         <div> <!-- 본문 내용 -->
             <div id="map_canvas"></div><br><br> <!-- !!!구글 지도 구역!!!--> 
             <div id="csvTable"></div> <!-- 테이블이 추가될 위치 -->
+            <div>
+                <h6>제작자: Freepik - Flaticon</h6>
+            </div>
         </div>
         <script>
             const API_KEY = config.APIKEY;
