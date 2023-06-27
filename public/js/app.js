@@ -14,30 +14,55 @@ app.listen(8080, function(){
 // "image" 디렉토리에서 정적 파일 제공
 // Serve static files from the "image" directory
 app.use('/image/tourimg', express.static(path.join(__dirname, '..', 'image', 'tourimg')));
-app.use('../image', express.static('../image'));
-app.use('../html', express.static('../html'));
-app.use('../data', express.static('../data'));
-app.use('../css', express.static('../css'));
-app.use('../js', express.static('../js'));
+app.use('/image', express.static('../image'));
+app.use('/html', express.static('../html'));
+app.use('/data', express.static('../data'));
+app.use('/css', express.static('../css'));
+app.use('/js', express.static('../js'));
 
-app.get("../html/area.html", (req, res) => {
-  const template = fs.readFileSync('/menu.ejs', 'utf-8');
+app.get("/area", (req, res) => {
+  const template = fs.readFileSync('menu.ejs', 'utf-8');
   const rendered = ejs.render(template, { name: '' });
   const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
 
-  const htmlFilePath = '../html/area.html';
+  const htmlFilePath = path.join(__dirname, '..', 'html', 'area.html');
   const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
   const finalHtml = htmlWithLink + htmlContent;
 
   res.send(finalHtml);
 });
 
-app.get("../html/map.html", (req, res) => {
-  const template = fs.readFileSync('/menu.ejs', 'utf-8');
+
+app.get("/map", (req, res) => {
+  const template = fs.readFileSync('menu.ejs', 'utf-8');
   const rendered = ejs.render(template, { name: '' });
   const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
 
-  const htmlFilePath = '../html/map.html';
+  const htmlFilePath = path.join(__dirname, '..', 'html', 'map.html');
+  const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
+  const finalHtml = htmlWithLink + htmlContent;
+
+  res.send(finalHtml);
+});
+
+app.get("/job", (req, res) => {
+  const template = fs.readFileSync('menu.ejs', 'utf-8');
+  const rendered = ejs.render(template, { name: '' });
+  const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
+
+  const htmlFilePath = path.join(__dirname, '..', 'html', 'job.html');
+  const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
+  const finalHtml = htmlWithLink + htmlContent;
+
+  res.send(finalHtml);
+});
+
+app.get("/home", (req, res) => {
+  const template = fs.readFileSync('menu.ejs', 'utf-8');
+  const rendered = ejs.render(template, { name: '' });
+  const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
+
+  const htmlFilePath = path.join(__dirname, '..', 'html', 'home.html');
   const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
   const finalHtml = htmlWithLink + htmlContent;
 
@@ -54,13 +79,10 @@ app.get("/", function(req, res){
 });
 
 
-app.get('/tour.html', (req, res) => {
+app.get('/tour', (req, res) => {
     const tsvFilePath = '../data/tourdata2.tsv';
-    // TSV 파일 읽기
-    const template = fs.readFileSync('./menu.ejs', 'utf-8');
-    const tsvFilePath = './tourdata2.tsv';
-    // TSV 파일 읽기
-    const template = fs.readFileSync('/menu.ejs', 'utf-8');
+
+    const template = fs.readFileSync('menu.ejs', 'utf-8');
 
     const rendered = ejs.render(template, { name: '' });
   
@@ -112,8 +134,6 @@ app.get('/tour.html', (req, res) => {
     const tsvFilePath = '../data/tourdata2.tsv';
     const id = req.params.id;
 
-    const template = fs.readFileSync('./menu.ejs', 'utf-8');
-
     const template = fs.readFileSync('menu.ejs', 'utf-8');
     const rendered = ejs.render(template, { name: '../' });
   
@@ -146,7 +166,8 @@ app.get('/tour.html', (req, res) => {
         const place = places[id];
 
         let output = `<div class="detail_container"><h1>${place.명소}</h1>`;
-        const img = `/image/tour_img/${places[id].명소}.jpeg`;
+        const img = `../image/tourimg/${places[id].명소}.jpeg`;
+        
         output += `<img src="${img}">`;
   
         for (let j = 1; j < headers.length; j++) {

@@ -32,10 +32,10 @@
                     var cells = lines[i].split(",");
                     tableHTML += "<tr>";
                     tableHTML += "<td><a href='#' class='recommend'>" + cells[1] + "</td>";
-                    tableHTML += "<td>" + cells[11] + "</td>";
-                    tableHTML += "<td><progress value='" + cells[10] + "' max='100'></progress></td>";
+                    tableHTML += "<td>" + cells[13] + "</td>";
+                    tableHTML += "<td><progress value='" + cells[12] + "' max='100'></progress></td>";
                     tableHTML += "<td>" + cells[0] + "</td>";
-                    tableHTML += "<td>" + cells[12] + "</td>";
+                    tableHTML += "<td>" + cells[14] + "</td>";
                     tableHTML += "</tr>";
                     
                 }
@@ -57,6 +57,18 @@
         </script>
     </head>
     <body>
+        <div class="colorbox" style="width: 1280px; height: 70px; margin-top: 2px;">
+            <ul class="nav1">
+            <li>
+                <div><a href="/area">제주살이</a></div>
+            </li>
+            <li>
+                <div><a href="/area_table">추천지역</a></div>
+            </li>
+            <li>
+                <div><a href="#">장애인 전용 편의 시설</a></div>
+            </li>
+        </div>
         <div> <!-- 본문 내용 -->
             <br><br>
             <div id="div_table"> <!-- 주거 지역 추천 -->

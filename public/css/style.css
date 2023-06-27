@@ -59,25 +59,28 @@ h2 {
     margin: 30px;
 }
 
+
 .header {
     display: flex;
     width: 1300px;
+    margin: auto;
     background:rgba(0, 0, 0, 0);
     height: 86px;
+    margin-left: 150px;
 }
 
 .searchArea {
-    width: 180px;
+    width: 200px;
     height: 28px;
-    background: rgba(212, 212, 212, 0.607);
+    background: rgba(167, 166, 172, 0.233);
     border-radius: 5px; /*모서리 둥글게*/
-    margin-top: 44px;
-    margin-left: 200px; 
+    margin-top: 35px; 
+    margin-left: 300px;
 }
 
 .searchArea > form > input {
     border: none;
-    width: 180px;
+    width: 160px;
     height: 28px;
     background: rgba(0, 0, 0,0);
     color:#000000;
@@ -85,10 +88,11 @@ h2 {
 }
 
 .searchArea > form > span {
-    width: 30px;
+    width: 50px;
     color: #2b2b2ba9;
     font-weight: bold;
     cursor: pointer;
+    font-size: smaller;
 }
 
 .nav{

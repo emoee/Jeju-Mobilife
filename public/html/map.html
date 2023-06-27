@@ -1,20 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Google Maps Example</title>
-  <style>
-    #map {
-      width: 65%;
-      height: 400px;
-      text-align: right;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/area_style.css">  <!--css연동-->
+    <title>모빌라이프</title>
+    <style>
+        #map_canvas {
+            height: 500px;
+            margin: 0 auto; /* 수평 가운데 정렬 */
+            width: 55%;
+        }
+        #div_area_table {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-  <div id="map"></div>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWHI8KDTDEjiyAt39vEZFJVH0LOMe1iRQ&callback=initMap" async defer></script>
-  <script src="map.js"></script>
+    <div> <!-- 본문 내용 -->
+        <div> <!-- !!!구글 지도 구역!!! -->
+            <div id="map_canvas"></div>
+        </div><br><br>
+    </div>
+
+    <script>
+        // 구글 지도 API 키
+        const API_KEY = 'YOUR_API_KEY';
+
+        // 지도
+        function initMap() {
+            const center_loc = { lat: 33.364219, lng: 126.529098 };
+            const infowindow = new google.maps.InfoWindow();
+            const map = new google.maps.Map(document.getElementById("map_canvas"), {
+                zoom: 10,
+                center: center_loc
+            });
+            
+            // CSV 파일 로드
+            fetch('../data/tourdata.tsv')  // TSV 파일 경로
+                .then(response => response.text())
+                .then(data => {
+                    const rows = data.split('\n');  // 행으로 분할
+                    
+                    for (let i = 1; i < rows.length; i++) {  // 첫 번째 행은 헤더이므로 건너뜀
+                        const columns = rows[i].split('\t');  // 열로 분할 (TSV 파일은 탭으로 구분됨)
+                        const placeName = columns[0];
+                        const latitude = parseFloat(columns[1]);
+                        const longitude = parseFloat(columns[2]);
+                        const placeNo = columns[3];
+                        
+                        // 마커 생성
+                        const marker = new google.maps.Marker({
+                            position: { lat: latitude, lng: longitude },
+                            map: map,
+                            title: placeName
+                        });
+                        
+                        // 마커 클릭 이벤트 처리
+                        marker.addListener('click', function() {
+                            infowindow.setContent(placeName);
+                            infowindow.open(map, marker);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWHI8KDTDEjiyAt39vEZFJVH0LOMe1iRQ&callback=initMap" async defer></script>
 </body>
 </html>
