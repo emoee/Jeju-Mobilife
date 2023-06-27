@@ -173,8 +173,6 @@ h2 {
 .v {
     float: left;
 }
-
-
 /* job_text */
 
 .job_text {
@@ -665,4 +663,3 @@ h2 {
 .tplTabBx_1 .tplTab > li.on:after {
     display: none;
 }
-
