@@ -18,7 +18,7 @@ app.use('/image', express.static(__dirname + '/image'));
 app.use('/area', express.static(__dirname + '/area'));
 
 app.get("/area.html", (req, res) => {
-  const template = fs.readFileSync('menu.ejs', 'utf-8');
+  const template = fs.readFileSync('./public/menu.ejs', 'utf-8');
   const rendered = ejs.render(template, { name: '' });
   const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
 
@@ -53,7 +53,7 @@ app.get("/", function(req, res){
 app.get('/tour.html', (req, res) => {
     const tsvFilePath = './tourdata2.tsv';
     // TSV 파일 읽기
-    const template = fs.readFileSync('menu.ejs', 'utf-8');
+    const template = fs.readFileSync('./public/menu.ejs', 'utf-8');
     const rendered = ejs.render(template, { name: '' });
   
     fs.readFile(tsvFilePath, 'utf-8', (err, data) => {
@@ -84,7 +84,7 @@ app.get('/tour.html', (req, res) => {
   
       for (let i = 0; i < places.length-1; i++) {
           output += `<div class="image-container">`
-          let imageUrl = `./img/${places[i].명소}.jpeg`;
+          let imageUrl = `./image/tour_img/${places[i].명소}.jpeg`;
           output += `<a href="/places/${i}"><img src="${imageUrl}" alt="${places[i].명소}"></a>`;
           output += `<span class="image-text">${places[i].명소}</span>`
           output += `</div>`
@@ -99,7 +99,7 @@ app.get('/tour.html', (req, res) => {
 
     const tsvFilePath = './tourdata2.tsv';
     const id = req.params.id;
-    const template = fs.readFileSync('menu.ejs', 'utf-8');
+    const template = fs.readFileSync('./public/menu.ejs', 'utf-8');
     const rendered = ejs.render(template, { name: '../' });
   
     // TSV 파일 읽기
@@ -131,7 +131,7 @@ app.get('/tour.html', (req, res) => {
         const place = places[id];
 
         let output = `<div class="detail_container"><h1>${place.명소}</h1>`;
-        const img = `../img/${places[id].명소}.jpeg`;
+        const img = `../image/tour_img/${places[id].명소}.jpeg`;
         output += `<img src="${img}">`;
   
         for (let j = 1; j < headers.length; j++) {
