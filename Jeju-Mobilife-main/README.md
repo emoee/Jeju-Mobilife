@@ -1,2 +1,0 @@
-# Jeju-Mobilife
-#dir

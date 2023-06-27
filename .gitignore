@@ -8,6 +8,10 @@
 .LSOverride
 .문서
 /문서
+.docx
+node_modules
+.json
+google_maps_key.js
 
 # Icon must end with two \r
 Icon
