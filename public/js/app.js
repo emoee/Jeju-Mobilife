@@ -11,11 +11,16 @@ app.listen(8080, function(){
     console.log("Listening on 8080");
 });
 
+// "image" 디렉토리에서 정적 파일 제공
 // Serve static files from the "image" directory
-app.use('/image', express.static(__dirname + '/image'));
+app.use('/image/tourimg', express.static(path.join(__dirname, '..', 'image', 'tourimg')));
+app.use('/html', express.static(path.join(__dirname, '..', 'html')));
+app.use('/css', express.static(path.join(__dirname, '..', 'css')));
 
-// Serve static files from the "area" directory
-app.use('/area', express.static(__dirname + '/area'));
+
+
+// // Serve static files from the "area" directory
+// app.use('/area', express.static(__dirname + '/area'));
 
 app.get("/area.html", (req, res) => {
   const template = fs.readFileSync('./menu.ejs', 'utf-8');
@@ -41,7 +46,7 @@ app.get("/map.html", (req, res) => {
   res.send(finalHtml);
 });
 
-app.use(express.static('public'));
+app.use(express.static('public/js'));
 
 // Define routes
 app.get("/", function(req, res){
@@ -80,17 +85,21 @@ app.get('/tour.html', (req, res) => {
       }
   
       // 명소 리스트 출력
-      let output = '<div class="tour_list">';
+      let output = '<html><div class="tour_list">';
+
   
-      for (let i = 0; i < places.length-1; i++) {
+      for (let i = 0; i < places.length; i++) {
           output += `<div class="image-container">`
-          let imageUrl = `../image/tour_img/${places[i].명소}.jpeg`;
+          let imageUrl = `../image/tourimg/${places[i].명소}.jpeg`;
+          console.log(places[i].명소)
+          console.log(imageUrl);
           output += `<a href="/places/${i}"><img src="${imageUrl}" alt="${places[i].명소}"></a>`;
           output += `<span class="image-text">${places[i].명소}</span>`
           output += `</div>`
         }
-        
-      output += '</div>';
+      const cssFilePath = '../css/tour.css';
+      output += `<link rel="stylesheet" type="text/css" href="${cssFilePath}">`;
+      output += '</div></html>';
       res.send(rendered + output);
     });
   });
@@ -99,7 +108,7 @@ app.get('/tour.html', (req, res) => {
 
     const tsvFilePath = '../data/tourdata2.tsv';
     const id = req.params.id;
-    const template = fs.readFileSync('./public/menu.ejs', 'utf-8');
+    const template = fs.readFileSync('./menu.ejs', 'utf-8');
     const rendered = ejs.render(template, { name: '../' });
   
     // TSV 파일 읽기
@@ -131,14 +140,14 @@ app.get('/tour.html', (req, res) => {
         const place = places[id];
 
         let output = `<div class="detail_container"><h1>${place.명소}</h1>`;
-        const img = `../image/tour_img/${places[id].명소}.jpeg`;
+        const img = `/image/tour_img/${places[id].명소}.jpeg`;
         output += `<img src="${img}">`;
   
         for (let j = 1; j < headers.length; j++) {
           output += `<p>${headers[j]}: ${place[headers[j]]}</p>`;
         }
   
-        const cssFilePath = '../tour.css';
+        const cssFilePath = '../css/tour.css';
         output += `<link rel="stylesheet" type="text/css" href="${cssFilePath}">`;
         output += `</div>`
   
