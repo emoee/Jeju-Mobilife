@@ -12,29 +12,38 @@ app.listen(8080, function(){
 });
 
 // Serve static files from the "image" directory
-app.use('/image', express.static(__dirname + '/image'));
+app.use('../image', express.static('../image'));
 
 // Serve static files from the "area" directory
-app.use('/area', express.static(__dirname + '/area'));
+app.use('../html', express.static('../html'));
 
-app.get("/area.html", (req, res) => {
-  const template = fs.readFileSync('./public/menu.ejs', 'utf-8');
+// Serve static files from the "area" directory
+app.use('../data', express.static('../data'));
+
+// Serve static files from the "area" directory
+app.use('../css', express.static('../css'));
+
+// Serve static files from the "area" directory
+app.use('../js', express.static('../js'));
+
+app.get("../html/area.html", (req, res) => {
+  const template = fs.readFileSync('/menu.ejs', 'utf-8');
   const rendered = ejs.render(template, { name: '' });
   const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
 
-  const htmlFilePath = './public/area.html';
+  const htmlFilePath = '../html/area.html';
   const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
   const finalHtml = htmlWithLink + htmlContent;
 
   res.send(finalHtml);
 });
 
-app.get("/map.html", (req, res) => {
-  const template = fs.readFileSync('menu.ejs', 'utf-8');
+app.get("../html/map.html", (req, res) => {
+  const template = fs.readFileSync('/menu.ejs', 'utf-8');
   const rendered = ejs.render(template, { name: '' });
   const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
 
-  const htmlFilePath = './public/map.html';
+  const htmlFilePath = '../html/map.html';
   const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
   const finalHtml = htmlWithLink + htmlContent;
 
@@ -47,13 +56,13 @@ app.use(express.static('public'));
 app.get("/", function(req, res){
     console.log("req.ip => " + req.ip);
     console.log("req.hostname => " + req.hostname);
-    res.sendFile(__dirname + "/home.html");
+    res.sendFile(__dirname + "../html/home.html");
 });
 
-app.get('/tour.html', (req, res) => {
+app.get('../html/tour.html', (req, res) => {
     const tsvFilePath = './tourdata2.tsv';
     // TSV 파일 읽기
-    const template = fs.readFileSync('./public/menu.ejs', 'utf-8');
+    const template = fs.readFileSync('/menu.ejs', 'utf-8');
     const rendered = ejs.render(template, { name: '' });
   
     fs.readFile(tsvFilePath, 'utf-8', (err, data) => {
@@ -99,7 +108,7 @@ app.get('/tour.html', (req, res) => {
 
     const tsvFilePath = './tourdata2.tsv';
     const id = req.params.id;
-    const template = fs.readFileSync('./public/menu.ejs', 'utf-8');
+    const template = fs.readFileSync('menu.ejs', 'utf-8');
     const rendered = ejs.render(template, { name: '../' });
   
     // TSV 파일 읽기
