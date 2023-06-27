@@ -76,7 +76,7 @@ rank_df = result_df.sort_values(by='순위', ascending=True)
 
 # 각 동별로 항목별 많은 순위와 개수를 기록하여 '비고' 열에 추가
 def add_remarks(df):
-    facilities = ['버스정류장', '학교', '마을안전시설', '마을 편의 시설', '장애인 복지 시설/기관']
+    facilities = ['마을안전시설', '장애인 복지 시설/기관']
 
     # 응급실보유병원은 맨 앞에 추가
     df.loc[df['응급실보유병원'] > 0, '비고'] = '응급실보유병원 있음'
