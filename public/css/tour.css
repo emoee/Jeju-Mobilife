@@ -273,11 +273,12 @@ h2 {
 }
 
 .tour_list {
-    text-align: left;
+    display: inline-block;
+    text-align: center;
     margin-top: 20px;
     margin-left: 20px;
     margin-bottom: 20px;
-    width: 30%;
+    margin-right: 20px;
 }
 
 .grid-container2 {
@@ -290,5 +291,31 @@ h2 {
   .grid-container2 > div {
     text-align: center;
   }
+/* img {
+    margin: 20px;
+    opacity: 60%;
+} */
 
+.image-container {
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    margin: 20px;
+    opacity: 60%;
+    /* 추가적인 스타일링을 원한다면 여기에 적용합니다 */
+  }
   
+.image-text {
+    position: absolute;
+    top: 10px; /* 텍스트의 위치 조정 */
+    left: 10px;
+    color: white; /* 텍스트 스타일 설정 */
+    font-size: 18px;
+    opacity: 100%;
+    background-color: #000;
+    /* 추가적인 스타일링을 원한다면 여기에 적용합니다 */
+}
+
+.detail_container{
+    text-align: center;
+}
