@@ -175,10 +175,11 @@ app.get('/tour', (req, res) => {
         }
   
         const cssFilePath = '../css/tour.css';
+        
         output += `<link rel="stylesheet" type="text/css" href="${cssFilePath}">`;
         output += `</div>`
   
-        
+
         res.send(rendered + output);
       } else {
         res.status(404).send('Not Found');
