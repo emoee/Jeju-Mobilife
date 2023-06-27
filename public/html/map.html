@@ -66,6 +66,14 @@
         }
     </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <script>
+      const API_KEY = config.APIKEY;
+      const url = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap&libraries=&v=weekly`;
+      const script = document.createElement('script');
+      script.src = url;
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+    </script>
 </body>
 </html>

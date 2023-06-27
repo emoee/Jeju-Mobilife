@@ -57,11 +57,8 @@ app.get("/", function(req, res){
 
 app.get('/tour.html', (req, res) => {
     const tsvFilePath = '../data/tourdata2.tsv';
-    // TSV 파일 읽기
-    const template = fs.readFileSync('./menu.ejs', 'utf-8');
-    const tsvFilePath = './tourdata2.tsv';
-    // TSV 파일 읽기
-    const template = fs.readFileSync('/menu.ejs', 'utf-8');
+
+    const template = fs.readFileSync('menu.ejs', 'utf-8');
 
     const rendered = ejs.render(template, { name: '' });
   
@@ -112,8 +109,6 @@ app.get('/tour.html', (req, res) => {
 
     const tsvFilePath = '../data/tourdata2.tsv';
     const id = req.params.id;
-
-    const template = fs.readFileSync('./menu.ejs', 'utf-8');
 
     const template = fs.readFileSync('menu.ejs', 'utf-8');
     const rendered = ejs.render(template, { name: '../' });
