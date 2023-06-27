@@ -11,7 +11,7 @@
                 margin: 0 auto; /* 수평 가운데 정렬 */
                 width: 55%;
             }
-            #div_area_table {
+            #rank_area_table {
                 text-align : center;
               }
         </style>
@@ -19,6 +19,9 @@
             const markers = []
             var map = 0
             //지도
+            
+        </script>
+        <script>
             function initMap() {
                 const center_loc = { lat: 33.364219, lng: 126.529098 };
                 const infowindow = new google.maps.InfoWindow();
@@ -26,14 +29,6 @@
                   zoom: 10,
                   center: center_loc
                 });
-                // The marker, positioned at center_loc
-                const marker = new google.maps.Marker({
-                  position: center_loc,
-                  map: map
-                });
-              }
-        </script>
-        <script>
             fetch("../data/jeju_dong.csv")
             .then(response => response.text())
             .then(data => {
@@ -41,8 +36,27 @@
                 var tableHTML = "<table><tr>";
                     for (var i = 1; i < 4; i++) { // Start from the second row
                         var cells = lines[i].split(",");
-                        tableHTML += "<th><img src='../image/rank" + cells[11]+ ".jpeg'/></th>"
+                        tableHTML += "<th><img src='../image/rank" + cells[13]+ ".png' style='width:50px; height:68px;/></th>"
                         tableHTML += "<th><a href='#' class='recommend'>" + cells[1] + "</th>";
+
+                        const latitude = parseFloat(cells[2]);
+                        const longitude = parseFloat(cells[3]); //수정
+                        const placeName = cells[1];
+                        const marker = new google.maps.Marker({
+                            map: map,
+                            title: placeName,
+                            position: { lat: latitude, lng: longitude }
+                        });   
+                        marker.setMap(map);
+                        marker.addListener('click', (function(marker, i) {
+                            return function() {
+                            //html로 표시될 인포 윈도우의 내용
+                            infowindow.setContent(placeName);
+        
+                            //인포윈도우가 표시될 위치
+                            infowindow.open(map, marker);
+                            }
+                        })(marker, i), { passive: true });
                         
                     }
                     tableHTML += "</tr></table>";
@@ -56,30 +70,11 @@
                         location.href = `../html/recommend_area.html?data=${encodeURIComponent(aText)}`;
                     });
                     }
-                    const latitude = parseFloat(33.364219); //수정
-                    const longitude = parseFloat(126.529098); //수정
-                    const placeName = cells[1];
-                    const marker = new google.maps.Marker({
-                        map: map,
-                        title: placeName,
-                        position: { lat: latitude, lng: longitude }
-                    });   
-                    marker.setMap(map);
-                    map.setCenter(new google.maps.LatLng(latitude,longitude));
-                    map.setZoom(12);
-                    marker.addListener('click', (function(marker, i) {
-                        return function() {
-                        //html로 표시될 인포 윈도우의 내용
-                        infowindow.setContent(placeName);
-  
-                        //인포윈도우가 표시될 위치
-                        infowindow.open(map, marker);
-                        }
-                    })(marker, i), { passive: true });
                 })
                 .catch(error => {
                     console.log("오류 발생: " + error);
                 });
+            }
         </script>
     </head>
     <body>
