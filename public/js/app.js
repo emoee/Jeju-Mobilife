@@ -20,7 +20,7 @@ app.use('/data', express.static('../data'));
 app.use('/css', express.static('../css'));
 app.use('/js', express.static('../js'));
 
-app.get("/area.html", (req, res) => {
+app.get("/area", (req, res) => {
   const template = fs.readFileSync('menu.ejs', 'utf-8');
   const rendered = ejs.render(template, { name: '' });
   const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
@@ -33,12 +33,36 @@ app.get("/area.html", (req, res) => {
 });
 
 
-app.get("/map.html", (req, res) => {
+app.get("/map", (req, res) => {
   const template = fs.readFileSync('menu.ejs', 'utf-8');
   const rendered = ejs.render(template, { name: '' });
   const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
 
   const htmlFilePath = path.join(__dirname, '..', 'html', 'map.html');
+  const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
+  const finalHtml = htmlWithLink + htmlContent;
+
+  res.send(finalHtml);
+});
+
+app.get("/job", (req, res) => {
+  const template = fs.readFileSync('menu.ejs', 'utf-8');
+  const rendered = ejs.render(template, { name: '' });
+  const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
+
+  const htmlFilePath = path.join(__dirname, '..', 'html', 'job.html');
+  const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
+  const finalHtml = htmlWithLink + htmlContent;
+
+  res.send(finalHtml);
+});
+
+app.get("/home", (req, res) => {
+  const template = fs.readFileSync('menu.ejs', 'utf-8');
+  const rendered = ejs.render(template, { name: '' });
+  const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
+
+  const htmlFilePath = path.join(__dirname, '..', 'html', 'home.html');
   const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
   const finalHtml = htmlWithLink + htmlContent;
 
@@ -55,7 +79,7 @@ app.get("/", function(req, res){
 });
 
 
-app.get('/tour.html', (req, res) => {
+app.get('/tour', (req, res) => {
     const tsvFilePath = '../data/tourdata2.tsv';
 
     const template = fs.readFileSync('menu.ejs', 'utf-8');

@@ -24,6 +24,9 @@
     </div>
 
     <script>
+        // 구글 지도 API 키
+        const API_KEY = 'YOUR_API_KEY';
+
         // 지도
         function initMap() {
             const center_loc = { lat: 33.364219, lng: 126.529098 };
@@ -66,14 +69,6 @@
         }
     </script>
 
-    <script>
-      const API_KEY = config.APIKEY;
-      const url = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&callback=initMap&libraries=&v=weekly`;
-      const script = document.createElement('script');
-      script.src = url;
-      script.async = true;
-      script.defer = true;
-      document.body.appendChild(script);
-    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWHI8KDTDEjiyAt39vEZFJVH0LOMe1iRQ&callback=initMap" async defer></script>
 </body>
 </html>
