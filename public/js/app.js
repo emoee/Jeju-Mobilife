@@ -166,7 +166,8 @@ app.get('/tour', (req, res) => {
         const place = places[id];
 
         let output = `<div class="detail_container"><h1>${place.명소}</h1>`;
-        const img = `/image/tour_img/${places[id].명소}.jpeg`;
+        const img = `../image/tourimg/${places[id].명소}.jpeg`;
+        
         output += `<img src="${img}">`;
   
         for (let j = 1; j < headers.length; j++) {
