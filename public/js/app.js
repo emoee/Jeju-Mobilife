@@ -18,7 +18,7 @@ app.use('/image', express.static(__dirname + '/image'));
 app.use('/area', express.static(__dirname + '/area'));
 
 app.get("/area.html", (req, res) => {
-  const template = fs.readFileSync('./public/menu.ejs', 'utf-8');
+  const template = fs.readFileSync('./menu.ejs', 'utf-8');
   const rendered = ejs.render(template, { name: '' });
   const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
 
@@ -47,13 +47,13 @@ app.use(express.static('public'));
 app.get("/", function(req, res){
     console.log("req.ip => " + req.ip);
     console.log("req.hostname => " + req.hostname);
-    res.sendFile(__dirname + "/home.html");
+    res.sendFile(__dirname + "../html/home.html");
 });
 
 app.get('/tour.html', (req, res) => {
-    const tsvFilePath = './tourdata2.tsv';
+    const tsvFilePath = '../data/tourdata2.tsv';
     // TSV 파일 읽기
-    const template = fs.readFileSync('./public/menu.ejs', 'utf-8');
+    const template = fs.readFileSync('./menu.ejs', 'utf-8');
     const rendered = ejs.render(template, { name: '' });
   
     fs.readFile(tsvFilePath, 'utf-8', (err, data) => {
@@ -84,7 +84,7 @@ app.get('/tour.html', (req, res) => {
   
       for (let i = 0; i < places.length-1; i++) {
           output += `<div class="image-container">`
-          let imageUrl = `./image/tour_img/${places[i].명소}.jpeg`;
+          let imageUrl = `../image/tour_img/${places[i].명소}.jpeg`;
           output += `<a href="/places/${i}"><img src="${imageUrl}" alt="${places[i].명소}"></a>`;
           output += `<span class="image-text">${places[i].명소}</span>`
           output += `</div>`
@@ -97,7 +97,7 @@ app.get('/tour.html', (req, res) => {
   
   app.get('/places/:id', (req, res) => {
 
-    const tsvFilePath = './tourdata2.tsv';
+    const tsvFilePath = '../data/tourdata2.tsv';
     const id = req.params.id;
     const template = fs.readFileSync('./public/menu.ejs', 'utf-8');
     const rendered = ejs.render(template, { name: '../' });
