@@ -56,6 +56,26 @@
                         location.href = `../html/recommend_area.html?data=${encodeURIComponent(aText)}`;
                     });
                     }
+                    const latitude = parseFloat(33.364219); //수정
+                    const longitude = parseFloat(126.529098); //수정
+                    const placeName = cells[1];
+                    const marker = new google.maps.Marker({
+                        map: map,
+                        title: placeName,
+                        position: { lat: latitude, lng: longitude }
+                    });   
+                    marker.setMap(map);
+                    map.setCenter(new google.maps.LatLng(latitude,longitude));
+                    map.setZoom(12);
+                    marker.addListener('click', (function(marker, i) {
+                        return function() {
+                        //html로 표시될 인포 윈도우의 내용
+                        infowindow.setContent(placeName);
+  
+                        //인포윈도우가 표시될 위치
+                        infowindow.open(map, marker);
+                        }
+                    })(marker, i), { passive: true });
                 })
                 .catch(error => {
                     console.log("오류 발생: " + error);

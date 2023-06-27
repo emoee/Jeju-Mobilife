@@ -34,150 +34,150 @@
                     zoom: 10,
                     center: center_loc,
                 });
-                Mapload(markers, infowindow)
+                
+                fetch("../data/jeju_recommend.csv")
+                .then(response => response.text())
+                .then(data => {
+                    console.log("성공");
+                    var lines = data.split("\n");
+                    var tableHTML = "<table id='div_area_table'>";
+                    for (var i = 0; i < lines.length; i++) {
+                        var cells = lines[i].split(",");
+                        if (i === 0) { //표 타이틀
+                            tableHTML += "<tr>";
+                            for (var j = 0; j < 4; j++) {
+                                tableHTML += "<th>" +  cells[j] + "</th>";
+                            }
+                            tableHTML += "</tr>";
+                        }
+                        if (cells[3].trim() == receivedData) {
+                            tableHTML += "<tr>";
+                            for (var j = 0; j < 4; j++) {
+                                var icon = "";
+                                switch (true) {
+                                    case cells[j] === "119안전센터" || cells[j] === "소방서":
+                                        icon = "fire-station.png"
+                                        break;
+                                    case cells[j] === "경찰서" || cells[j] === "치안센터" || cells[j] === "파출소":
+                                        icon = "police-station.png"
+                                        break;
+                                    case cells[j] === "해양경찰서" || cells[j] === "해양파출소":
+                                        icon = "captain.png"
+                                        break;
+                                    case cells[j] === "병원" || cells[j] === "보건소" || cells[j] === "한의원":
+                                        icon = "hospital.png"
+                                        break;
+                                    case cells[j] === "초등학교" || cells[j] === "중학교" || cells[j] === "고등학교":
+                                        icon = "university.png"
+                                        break;
+                                    case cells[j] === "유치원":
+                                        icon = "kindergarten.png"
+                                        break;
+                                    case cells[j] === "기념품":
+                                        icon = "shopping-bag.png"
+                                        break;
+                                    case cells[j] === "마트" || cells[j] === "쇼핑시설":
+                                        icon = "shop.png"
+                                        break;
+                                    case cells[j] === "세탁소":
+                                        icon = "washing-machine.png"
+                                        break;
+                                    case cells[j] === "시장":
+                                        icon = "food-stand.png"
+                                        break;
+                                    case cells[j] === "약국":
+                                        icon = "pharmacy.png"
+                                        break;
+                                    case cells[j] === "우체국":
+                                        icon = "mail-box.png"
+                                        break;
+                                    case cells[j] === "은행":
+                                        icon = "bank.png"
+                                        break;
+                                    case cells[j] === "음식점":
+                                        icon = "cafe.png"
+                                        break;
+                                    case cells[j] === "자전거대여점":
+                                        icon = "bike-parking.png"
+                                        break;
+                                    case cells[j] === "복지시설":
+                                        icon = "wheelchair.png"
+                                        break;
+                                    case cells[j] === "재활용도움센터" || cells[j] == "클린하우스" :
+                                        icon = "recycle.png"
+                                        break;
+                                    case cells[j] === "전기차충전소":
+                                        icon = "electric-car.png"
+                                        break;
+                                    case cells[j] === "주유소":
+                                        icon = "refuel.png"
+                                        break;
+                                    case cells[j] === "주차장":
+                                        icon = "parking.png"
+                                        break;
+                                    case cells[j] === "카페":
+                                        icon = "sign.png"
+                                        break;
+                                    case cells[j] === "특산물판매점":
+                                        icon = "stall.png"
+                                        break;
+                                    case cells[j] === "편의점":
+                                        icon = "shop (1).png"
+                                        break;
+                                    case cells[j] === "화장실":
+                                        icon = "toilet.png"
+                                        break;
+                                    case cells[j] === "ATM":
+                                        icon = "atm-machine.png"
+                                        break;
+                                    default:
+                                        icon = "";
+                                        break;
+                                }
+                                if (icon == "") {
+                                    tableHTML += "<td>" + cells[j] + "</td>";
+                                } else {
+                                    tableHTML += "<td>" + "<img src='../image/" + icon + "' style='width:50px; height:50px;'/><br>" + cells[j] + "</td>";
+                                }
+                            }
+                            tableHTML += "</tr>";
+                            
+                            const latitude = parseFloat(cells[4]);
+                            const longitude = parseFloat(cells[5]);
+                            const placeName = cells[1];
+                            const marker = new google.maps.Marker({
+                                map: map,
+                                title: placeName,
+                                position: { lat: latitude, lng: longitude }
+                            });   
+                            marker.setMap(map);
+                            map.setCenter(new google.maps.LatLng(latitude,longitude));
+                            map.setZoom(12);
+                            marker.addListener('click', (function(marker, i) {
+                                return function() {
+                                //html로 표시될 인포 윈도우의 내용
+                                infowindow.setContent(placeName);
+                                
+                                //인포윈도우가 표시될 위치
+                                infowindow.open(map, marker);
+                                }
+                            })(marker, i), { passive: true });
+
+
+                        }
+                    }
+                    tableHTML += "</table>";
+                    document.getElementById("csvTable").innerHTML = tableHTML; // Add the table to the HTML element
+                })
+                .catch(error => {
+                    console.log("오류 발생: " + error);
+                }); 
             }
 
-            function Mapload(marker_array, infowindow) {
-                console.log("마커 생성");
-                console.log(marker_array.length);
-                for (var i = 0; i < marker_array.length; i++) {
-                    var marker = new google.maps.Marker({
-                        map: map,
-                        title: marker_array[i].title,
-                        position: new google.maps.LatLng(marker_array[i].lat, marker_array[i].lng),
-                    });   
-                    marker.setMap(map);
-                    map.setCenter(new google.maps.LatLng(marker_array[i].lat, marker_array[i].lng));
-                    map.setZoom(11);
-                    marker.addListener('click', (function(marker, i) {
-                        return function() {
-                          //html로 표시될 인포 윈도우의 내용
-                          infowindow.setContent(marker_array[i].title);
-                          
-                          //인포윈도우가 표시될 위치
-                          infowindow.open(map, marker);
-                        }
-                      })(marker, i), { passive: true });
-                      
-                }
-            }
+            
         </script>
         <script> //csv 파일
-            fetch("../data/jeju_recommend.csv")
-            .then(response => response.text())
-            .then(data => {
-                console.log("성공");
-                var lines = data.split("\n");
-                var tableHTML = "<table id='div_area_table'>";
-                for (var i = 0; i < lines.length; i++) {
-                    var cells = lines[i].split(",");
-                    if (i === 0) { //표 타이틀
-                        tableHTML += "<tr>";
-                        for (var j = 0; j < 4; j++) {
-                            tableHTML += "<th>" +  cells[j] + "</th>";
-                        }
-                        tableHTML += "</tr>";
-                    }
-                    if (cells[3].trim() == receivedData) {
-                        tableHTML += "<tr>";
-                        for (var j = 0; j < 4; j++) {
-                            var icon = "";
-                            switch (true) {
-                                case cells[j] === "119안전센터" || cells[j] === "소방서":
-                                    icon = "fire-station.png"
-                                    break;
-                                case cells[j] === "경찰서" || cells[j] === "치안센터" || cells[j] === "파출소":
-                                    icon = "police-station.png"
-                                    break;
-                                case cells[j] === "해양경찰서" || cells[j] === "해양파출소":
-                                    icon = "captain.png"
-                                    break;
-                                case cells[j] === "병원" || cells[j] === "보건소" || cells[j] === "한의원":
-                                    icon = "hospital.png"
-                                    break;
-                                case cells[j] === "초등학교" || cells[j] === "중학교" || cells[j] === "고등학교":
-                                    icon = "university.png"
-                                    break;
-                                case cells[j] === "유치원":
-                                    icon = "kindergarten.png"
-                                    break;
-                                case cells[j] === "기념품":
-                                    icon = "shopping-bag.png"
-                                    break;
-                                case cells[j] === "마트" || cells[j] === "쇼핑시설":
-                                    icon = "shop.png"
-                                    break;
-                                case cells[j] === "세탁소":
-                                    icon = "washing-machine.png"
-                                    break;
-                                case cells[j] === "시장":
-                                    icon = "food-stand.png"
-                                    break;
-                                case cells[j] === "약국":
-                                    icon = "pharmacy.png"
-                                    break;
-                                case cells[j] === "우체국":
-                                    icon = "mail-box.png"
-                                    break;
-                                case cells[j] === "은행":
-                                    icon = "bank.png"
-                                    break;
-                                case cells[j] === "음식점":
-                                    icon = "cafe.png"
-                                    break;
-                                case cells[j] === "자전거대여점":
-                                    icon = "bike-parking.png"
-                                    break;
-                                case cells[j] === "복지시설":
-                                    icon = "wheelchair.png"
-                                    break;
-                                case cells[j] === "재활용도움센터" || cells[j] == "클린하우스" :
-                                    icon = "recycle.png"
-                                    break;
-                                case cells[j] === "전기차충전소":
-                                    icon = "electric-car.png"
-                                    break;
-                                case cells[j] === "주유소":
-                                    icon = "refuel.png"
-                                    break;
-                                case cells[j] === "주차장":
-                                    icon = "parking.png"
-                                    break;
-                                case cells[j] === "카페":
-                                    icon = "sign.png"
-                                    break;
-                                case cells[j] === "특산물판매점":
-                                    icon = "stall.png"
-                                    break;
-                                case cells[j] === "편의점":
-                                    icon = "shop (1).png"
-                                    break;
-                                case cells[j] === "화장실":
-                                    icon = "toilet.png"
-                                    break;
-                                case cells[j] === "ATM":
-                                    icon = "atm-machine.png"
-                                    break;
-                                default:
-                                    icon = "";
-                                    break;
-                            }
-                            if (icon == "") {
-                                tableHTML += "<td>" + cells[j] + "</td>";
-                            } else {
-                                tableHTML += "<td>" + "<img src='../image/" + icon + "' style='width:50px; height:50px;'/><br>" + cells[j] + "</td>";
-                            }
-                        }
-                        tableHTML += "</tr>";
-                        markers.push({ lat: cells[5], lng: cells[4], title: cells[1]});
-                    }
-                }
-                tableHTML += "</table>";
-                document.getElementById("csvTable").innerHTML = tableHTML; // Add the table to the HTML element
-            })
-            .catch(error => {
-                console.log("오류 발생: " + error);
-            }); 
+            
         </script>
         </head> 
     <body>
