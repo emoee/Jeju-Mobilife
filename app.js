@@ -11,6 +11,7 @@ app.listen(8080, function(){
     console.log("Listening on 8080");
 });
 
+
 // Serve static files from the "image" directory
 app.use('/image', express.static(__dirname + '/image'));
 
