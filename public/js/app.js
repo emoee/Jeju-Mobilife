@@ -21,7 +21,7 @@ app.use('../css', express.static('../css'));
 app.use('../js', express.static('../js'));
 
 app.get("../html/area.html", (req, res) => {
-  const template = fs.readFileSync('/menu.ejs', 'utf-8');
+  const template = fs.readFileSync('../js/menu.ejs', 'utf-8');
   const rendered = ejs.render(template, { name: '' });
   const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
 
@@ -58,9 +58,6 @@ app.get('/tour.html', (req, res) => {
     const tsvFilePath = '../data/tourdata2.tsv';
     // TSV 파일 읽기
     const template = fs.readFileSync('./menu.ejs', 'utf-8');
-    const tsvFilePath = './tourdata2.tsv';
-    // TSV 파일 읽기
-    const template = fs.readFileSync('/menu.ejs', 'utf-8');
 
     const rendered = ejs.render(template, { name: '' });
   
@@ -113,8 +110,6 @@ app.get('/tour.html', (req, res) => {
     const id = req.params.id;
 
     const template = fs.readFileSync('./menu.ejs', 'utf-8');
-
-    const template = fs.readFileSync('menu.ejs', 'utf-8');
     const rendered = ejs.render(template, { name: '../' });
   
     // TSV 파일 읽기
