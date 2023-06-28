@@ -19,7 +19,7 @@
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script type="text/javascript" src="../js/config.js"></script>
+        <script type="text/javascript" src="/js/config.js"></script>
         <script> //구글 지도
             const markers = []
             var map = 0
@@ -35,7 +35,7 @@
                     center: center_loc,
                 });
                 
-                fetch("../data/jeju_recommend.csv")
+                fetch("/data/jeju_recommend.csv")
                 .then(response => response.text())
                 .then(data => {
                     console.log("성공");
@@ -137,7 +137,7 @@
                                 if (icon == "") {
                                     tableHTML += "<td>" + cells[j] + "</td>";
                                 } else {
-                                    tableHTML += "<td>" + "<img src='../image/" + icon + "' style='width:50px; height:50px;'/><br>" + cells[j] + "</td>";
+                                    tableHTML += "<td>" + "<img src='/image/" + icon + "' style='width:50px; height:50px;'/><br>" + cells[j] + "</td>";
                                 }
                             }
                             tableHTML += "</tr>";
