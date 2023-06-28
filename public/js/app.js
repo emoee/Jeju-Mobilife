@@ -128,8 +128,6 @@ app.get('/tour', (req, res) => {
       for (let i = 0; i < places.length; i++) {
           output += `<div class="image-container">`
           let imageUrl = `../image/tourimg/${places[i].명소}.jpeg`;
-          console.log(places[i].명소)
-          console.log(imageUrl);
           output += `<a href="/places/${i}"><img src="${imageUrl}" alt="${places[i].명소}"></a>`;
           output += `<span class="image-text">${places[i].명소}</span>`
           output += `</div>`
