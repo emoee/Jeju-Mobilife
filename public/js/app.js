@@ -14,7 +14,7 @@ app.listen(8080, () => {
 app.use(express.static(path.join(__dirname, 'public')));
 // Serve static files
 app.use('/image/tourimg', express.static(path.join(__dirname, '..', 'image', 'tourimg')));
-app.use('/image', express.static(path.join(__dirname, 'image')));
+app.use('/image', express.static(path.join(__dirname, '..', 'image')));
 app.use('/html', express.static(path.join(__dirname, '..', 'html')));
 app.use('/data', express.static(path.join(__dirname, '..', 'data')));
 app.use('/css', express.static(path.join(__dirname, '..', 'css')));
