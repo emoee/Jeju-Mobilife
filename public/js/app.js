@@ -75,7 +75,7 @@ app.use(express.static('public/js'));
 app.get("/", function(req, res){
     console.log("req.ip => " + req.ip);
     console.log("req.hostname => " + req.hostname);
-    res.sendFile(__dirname + "../html/home.html");
+    res.sendFile(path.join(__dirname, '..', 'html', 'home.html'));
 });
 
 
