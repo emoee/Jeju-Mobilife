@@ -64,7 +64,7 @@
                                     case cells[j] === "해양경찰서" || cells[j] === "해양파출소":
                                         icon = "captain.png"
                                         break;
-                                    case cells[j] === "병원" || cells[j] === "보건소" || cells[j] === "한의원":
+                                    case cells[j] === "병원" || cells[j] === "종합병원" || cells[j] === "보건소" || cells[j] === "한의원":
                                         icon = "hospital.png"
                                         break;
                                     case cells[j] === "초등학교" || cells[j] === "중학교" || cells[j] === "고등학교":
@@ -135,16 +135,16 @@
                                         break;
                                 }
                                 if (icon == "") {
-                                    tableHTML += "<td>" + cells[j] + "</td>";
+                                    tableHTML += "<td>" + cells[j].trim() + "</td>";
                                 } else {
-                                    tableHTML += "<td>" + "<img src='/image/" + icon + "' style='width:50px; height:50px;'/><br>" + cells[j] + "</td>";
+                                    tableHTML += "<td style='text-align: center; vertical-align: middle;>" + "<img src='/image/" + icon + "' style='width:50px; height:50px;'/><br>" + cells[j] + "</td>";
                                 }
                             }
                             tableHTML += "</tr>";
                             
                             const latitude = parseFloat(cells[4]);
                             const longitude = parseFloat(cells[5]);
-                            const placeName = cells[1];
+                            const placeName = cells[1].trim();
                             const marker = new google.maps.Marker({
                                 map: map,
                                 title: placeName,
