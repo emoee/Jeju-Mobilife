@@ -5,7 +5,7 @@ window.onload = function() {    // Your JavaScript code here
         aTags[i].addEventListener('click', function() {
             var aText = this.textContent;
             console.log(aText)
-            location.href = `../html/recommend_area.html?data=${encodeURIComponent(aText)}`;
+            location.href = `/area/table/recommend?data=${encodeURIComponent(aText)}`;
         });
         }
     }

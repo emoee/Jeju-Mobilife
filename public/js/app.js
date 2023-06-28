@@ -30,6 +30,27 @@ app.get("/area", (req, res) => {
   res.send(finalHtml);
 });
 
+app.get("/area/table", (req, res) => {
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
+  const rendered = ejs.render(template, { name: '' });
+  const htmlFilePath = path.join(__dirname, '..', 'html', 'area_table.html');
+  const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
+  const finalHtml = rendered + htmlContent;
+  res.send(finalHtml);
+});
+
+app.get("/area/table/recommend", (req, res) => {
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
+  const rendered = ejs.render(template, { name: '' });
+  const htmlFilePath = path.join(__dirname, '..', 'html', 'area_table.html');
+  const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
+  const finalHtml = rendered + htmlContent;
+  res.send(finalHtml);
+});
+
+
 app.get("/map", (req, res) => {
   const menuFilePath = path.join(__dirname, 'menu.ejs');
   const template = fs.readFileSync(menuFilePath, 'utf-8');
