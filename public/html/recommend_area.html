@@ -137,7 +137,7 @@
                                 if (icon == "") {
                                     tableHTML += "<td>" + cells[j].trim() + "</td>";
                                 } else {
-                                    tableHTML += "<td style='text-align: center; vertical-align: middle;>" + "<img src='/image/" + icon + "' style='width:50px; height:50px;'/><br>" + cells[j] + "</td>";
+                                    tableHTML += "<td style='text-align: center; vertical-align: middle;'>" + "<img src='/image/" + icon + "' style='width:50px; height:50px;'/><br>" + cells[j] + "</td>";
                                 }
                             }
                             tableHTML += "</tr>";
@@ -162,8 +162,6 @@
                                 infowindow.open(map, marker);
                                 }
                             })(marker, i), { passive: true });
-
-
                         }
                     }
                     tableHTML += "</table>";

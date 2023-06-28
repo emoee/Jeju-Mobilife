@@ -37,7 +37,7 @@
                     for (var i = 1; i < 4; i++) { // Start from the second row
                         var cells = lines[i].split(",");
                         tableHTML += "<th><img src='/image/rank" + cells[13]+ ".png' style='width:50px; height:68px;/></th>"
-                        tableHTML += "<th><a href='&#47;area&#47;table&#47;recommend?data='" + cells[1].trim() +  "' class='recommend'>" + cells[1].trim() + "</th>";
+                        tableHTML += "<th><a href='/area/table/recommend?data='" + cells[1].trim() +  "' class='recommend'>" + cells[1].trim() + "</th>";
 
                         const latitude = parseFloat(cells[2]);
                         const longitude = parseFloat(cells[3]); //수정
