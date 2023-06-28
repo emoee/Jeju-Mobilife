@@ -110,7 +110,19 @@ app.get('/tour', (req, res) => {
       }
   
       // 명소 리스트 출력
-      let output = '<html><div class="tour_list">';
+      let output = `<div class="colorbox" style="width: 1280px; height: 70px; margin-top: 2px;">
+      <ul class="nav1">
+      <li>
+          <div><a href="/map">지도</a></div>
+      </li>
+      <li>
+          <div><a href="/tour">중요관광지</a></div>
+      </li>
+      <li>
+          <div><a href="#">추천경로</a></div>
+      </li>
+  </div>`
+      output += '<html><div class="tour_list">';
 
   
       for (let i = 0; i < places.length; i++) {
@@ -165,13 +177,32 @@ app.get('/tour', (req, res) => {
         // 선택한 명소의 상세 정보 출력
         const place = places[id];
 
-        let output = `<div class="detail_container"><h1>${place.명소}</h1>`;
+        let output = `<div class="colorbox" style="width: 1280px; height: 70px; margin-top: 2px;">
+        <ul class="nav1">
+        <li>
+            <div><a href="/map">지도</a></div>
+        </li>
+        <li>
+            <div><a href="/tour">중요관광지</a></div>
+        </li>
+        <li>
+            <div><a href="#">추천경로</a></div>
+        </li>
+    </div>`
+
+        output += '<div class="detail_container"><div class="main_container">'
         const img = `../image/tourimg/${places[id].명소}.jpeg`;
         output += `<img src="${img}">`;
+        output += `<span><h1>${place.명소}</h1>`;
+        output += `<p>${headers[1]}: ${place[headers[1]]}</p> </span></div>`;
+
 
   
-        for (let j = 1; j < headers.length; j++) {
-          output += `<p>${headers[j]}: ${place[headers[j]]}</p>`;
+        for (let j = 2; j < headers.length; j++) {
+          output += '<div class="touricon">'
+          const img2 = `../image/touricon/icon${j}.png`;
+          output += `<img src="${img2}" wight = "50px" height = "50px">`;
+          output += `<p>${headers[j]}: ${place[headers[j]]}</p> </div>`;
         }
   
         const cssFilePath = '../css/tour.css';
