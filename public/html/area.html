@@ -37,7 +37,7 @@
                     for (var i = 1; i < 4; i++) { // Start from the second row
                         var cells = lines[i].split(",");
                         tableHTML += "<th><img src='/image/rank" + cells[13]+ ".png' style='width:50px; height:68px;/></th>"
-                        tableHTML += "<th><a href='#' class='recommend'>" + cells[1] + "</th>";
+                        tableHTML += "<th><a href='/area/table/recommend?data='" + cells[1].trim() +   "class='recommend'>" + cells[1].trim() + "</th>";
 
                         const latitude = parseFloat(cells[2]);
                         const longitude = parseFloat(cells[3]); //수정
@@ -61,15 +61,6 @@
                     }
                     tableHTML += "</tr></table>";
                     document.getElementById("rank_area_table").innerHTML = tableHTML; // Add the table to the HTML element
-                
-                    // Add event listeners to the 'recommend' class links
-                    var aTags = document.getElementsByClassName('recommend');
-                    for (var i = 0; i < aTags.length; i++) {
-                    aTags[i].addEventListener('click', function() {
-                        var aText = this.textContent;
-                        location.href = `/area/table/recommend?data=${encodeURIComponent(aText)}`;
-                    });
-                    }
                 })
                 .catch(error => {
                     console.log("오류 발생: " + error);
@@ -94,15 +85,7 @@
         <!-- 본문 내용 -->
             <div>
                 <table id ="rank_area_table">
-                    <tr>
-                      <th><img src="/image/rank1.jpeg"/></th>
-                      <th>항목 1</th>
-                      <th><img src="/image/rank2.jpeg"/></th>
-                      <th>항목 2</th>
-                      <th><img src="/image/rank3.jpeg"/></th>
-                      <th>항목 3</th>
-                    </tr>
-                  </table>
+                </table>
             </div>
             <div> <!-- !!!구글 지도 구역!!! --> 
                 <script type="text/javascript" src="/js/config.js"></script>
