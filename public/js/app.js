@@ -20,8 +20,10 @@ app.use('/data', express.static('../data'));
 app.use('/css', express.static('../css'));
 app.use('/js', express.static('../js'));
 
+
 app.get("/area", (req, res) => {
-  const template = fs.readFileSync('menu.ejs', 'utf-8');
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
   const rendered = ejs.render(template, { name: '' });
   const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
 
@@ -33,8 +35,10 @@ app.get("/area", (req, res) => {
 });
 
 
+
 app.get("/map", (req, res) => {
-  const template = fs.readFileSync('menu.ejs', 'utf-8');
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
   const rendered = ejs.render(template, { name: '' });
   const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
 
@@ -46,7 +50,8 @@ app.get("/map", (req, res) => {
 });
 
 app.get("/job", (req, res) => {
-  const template = fs.readFileSync('menu.ejs', 'utf-8');
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
   const rendered = ejs.render(template, { name: '' });
   const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
 
@@ -58,7 +63,8 @@ app.get("/job", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-  const template = fs.readFileSync('menu.ejs', 'utf-8');
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
   const rendered = ejs.render(template, { name: '' });
   const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
 
