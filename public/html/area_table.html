@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="../css/area_style.css">  <!--css연동-->
+        <link rel="stylesheet" type="text/css" href="/css/area_style.css">  <!--css연동-->
         <title>모빌라이프</title>
         <style>
             #map_canvas {
@@ -16,7 +16,7 @@
               }
         </style>
         <script>
-            fetch("../data/jeju_dong.csv")
+            fetch("/data/jeju_dong.csv")
             .then(response => response.text())
             .then(data => {
                 var lines = data.split("\n");
@@ -79,5 +79,5 @@
             </div> 
         </div>
     </body>
-    <script src="../js/area_send.js" defer></script>
+    <script src="/js/area_send.js" defer></script>
 </html>
