@@ -34,7 +34,8 @@ app.get("/area", (req, res) => {
 
 
 app.get("/map", (req, res) => {
-  const template = fs.readFileSync('menu.ejs', 'utf-8');
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
   const rendered = ejs.render(template, { name: '' });
   const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
 
@@ -82,7 +83,9 @@ app.get("/", function(req, res){
 app.get('/tour', (req, res) => {
     const tsvFilePath = '../data/tourdata2.tsv';
 
-    const template = fs.readFileSync('menu.ejs', 'utf-8');
+    // const template = fs.readFileSync('menu.ejs', 'utf-8');
+    const menuFilePath = path.join(__dirname, 'menu.ejs');
+    const template = fs.readFileSync(menuFilePath, 'utf-8');
 
     const rendered = ejs.render(template, { name: '' });
   
@@ -144,7 +147,9 @@ app.get('/tour', (req, res) => {
     const tsvFilePath = '../data/tourdata2.tsv';
     const id = req.params.id;
 
-    const template = fs.readFileSync('menu.ejs', 'utf-8');
+    // const template = fs.readFileSync('menu.ejs', 'utf-8');
+    const menuFilePath = path.join(__dirname, 'menu.ejs');
+    const template = fs.readFileSync(menuFilePath, 'utf-8');
     const rendered = ejs.render(template, { name: '../' });
   
     // TSV 파일 읽기
