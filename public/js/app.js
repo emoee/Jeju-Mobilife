@@ -123,9 +123,6 @@ app.get('/tour', (req, res) => {
       <li>
           <div><a href="/tour">중요관광지</a></div>
       </li>
-      <li>
-          <div><a href="#">추천경로</a></div>
-      </li>
   </div>`
       output += '<html><div class="tour_list">';
 
@@ -189,9 +186,6 @@ app.get('/tour', (req, res) => {
         </li>
         <li>
             <div><a href="/tour">중요관광지</a></div>
-        </li>
-        <li>
-            <div><a href="#">추천경로</a></div>
         </li>
     </div>`
 
