@@ -150,25 +150,10 @@ h2 {
     color: #ffffff;
     background-color: #f1f2f300;
 }
-  
-.submenu1 > li {
-    line-height: 60px;
-    background-color: #ffa659bb;
-}
-  
-.submenu1 {
-    height: 0px; /*ul의 높이를 안보이게 처리*/
-    overflow: hidden; }
-
 
 .nav1 > li:hover {
     background-color: #ffa65997;
 }
-  
-.nav1 > li:hover .submenu1 {
-    height: 250px; /*서브메뉴 li한개의 높이 50*5*/
-    transition-duration: 1s;
-}    
 
 .v {
     float: left;

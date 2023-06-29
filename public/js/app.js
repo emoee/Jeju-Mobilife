@@ -6,29 +6,48 @@ const path = require('path');
 
 app.set('view engine', 'ejs');
 
-app.listen(8080, function(){
-    console.log((new Date()).toLocaleString());
-    console.log("Listening on 8080");
+app.listen(8080, () => {
+  console.log((new Date()).toLocaleString());
+  console.log("Listening on 8080");
 });
 
-// "image" 디렉토리에서 정적 파일 제공
-// Serve static files from the "image" directory
+app.use(express.static(path.join(__dirname, 'public')));
+// Serve static files
 app.use('/image/tourimg', express.static(path.join(__dirname, '..', 'image', 'tourimg')));
-app.use('/image', express.static('../image'));
-app.use('/html', express.static('../html'));
-app.use('/data', express.static('../data'));
-app.use('/css', express.static('../css'));
-app.use('/js', express.static('../js'));
+app.use('/image', express.static(path.join(__dirname, '..', 'image')));
+app.use('/html', express.static(path.join(__dirname, '..', 'html')));
+app.use('/data', express.static(path.join(__dirname, '..', 'data')));
+app.use('/css', express.static(path.join(__dirname, '..', 'css')));
+app.use('/js', express.static(path.join(__dirname, '..', 'js')));
 
+// Routes
 app.get("/area", (req, res) => {
-  const template = fs.readFileSync('menu.ejs', 'utf-8');
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
   const rendered = ejs.render(template, { name: '' });
-  const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
-
   const htmlFilePath = path.join(__dirname, '..', 'html', 'area.html');
   const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
-  const finalHtml = htmlWithLink + htmlContent;
+  const finalHtml = rendered + htmlContent;
+  res.send(finalHtml);
+});
 
+app.get("/area/table", (req, res) => {
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
+  const rendered = ejs.render(template, { name: '' });
+  const htmlFilePath = path.join(__dirname, '..', 'html', 'area_table.html');
+  const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
+  const finalHtml = rendered + htmlContent;
+  res.send(finalHtml);
+});
+
+app.get("/area/table/recommend", (req, res) => {
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
+  const rendered = ejs.render(template, { name: '' });
+  const htmlFilePath = path.join(__dirname, '..', 'html', 'recommend_area.html');
+  const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
+  const finalHtml = rendered + htmlContent;
   res.send(finalHtml);
 });
 
@@ -37,48 +56,31 @@ app.get("/map", (req, res) => {
   const menuFilePath = path.join(__dirname, 'menu.ejs');
   const template = fs.readFileSync(menuFilePath, 'utf-8');
   const rendered = ejs.render(template, { name: '' });
-  const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
-
   const htmlFilePath = path.join(__dirname, '..', 'html', 'map.html');
   const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
-  const finalHtml = htmlWithLink + htmlContent;
-
+  const finalHtml = rendered + htmlContent;
   res.send(finalHtml);
 });
 
 app.get("/job", (req, res) => {
-  const template = fs.readFileSync('menu.ejs', 'utf-8');
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
   const rendered = ejs.render(template, { name: '' });
-  const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
-
   const htmlFilePath = path.join(__dirname, '..', 'html', 'job.html');
   const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
-  const finalHtml = htmlWithLink + htmlContent;
-
+  const finalHtml = rendered + htmlContent;
   res.send(finalHtml);
 });
 
 app.get("/home", (req, res) => {
-  const template = fs.readFileSync('menu.ejs', 'utf-8');
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
   const rendered = ejs.render(template, { name: '' });
-  const htmlWithLink = rendered.replace('<a href="link">Text</a>', '<a href="your_html_page.html">Text</a>');
-
   const htmlFilePath = path.join(__dirname, '..', 'html', 'home.html');
   const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
-  const finalHtml = htmlWithLink + htmlContent;
-
+  const finalHtml = rendered + htmlContent;
   res.send(finalHtml);
 });
-
-app.use(express.static('public/js'));
-
-// Define routes
-app.get("/", function(req, res){
-    console.log("req.ip => " + req.ip);
-    console.log("req.hostname => " + req.hostname);
-    res.sendFile(__dirname + "../html/home.html");
-});
-
 
 app.get('/tour', (req, res) => {
     const tsvFilePath = '../data/tourdata2.tsv';
@@ -220,3 +222,10 @@ app.get('/tour', (req, res) => {
       }
     });
   });
+
+// Default route
+app.get("/", (req, res) => {
+  console.log("req.ip => " + req.ip);
+  console.log("req.hostname => " + req.hostname);
+  res.sendFile(path.join(__dirname, '..', 'html', 'home.html'));
+});
