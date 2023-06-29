@@ -143,51 +143,54 @@ app.get('/tour', (req, res) => {
       places.push(place);
     }
 
-    // 페이지네이션
-    const itemsPerPage = 20;
-    const page = parseInt(req.query.page) || 1;
-    const startIndex = (page - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const paginatedPlaces = places.slice(startIndex, endIndex);
-    const totalPages = Math.ceil(places.length / itemsPerPage);
-
     // 명소 리스트 출력
     let output = `<div class="colorbox" style="width: 1280px; height: 70px; margin-top: 2px;">
-      <ul class="nav1">
-        <li>
-          <div><a href="/map">지도</a></div>
-        </li>
-        <li>
-          <div><a href="/tour">중요관광지</a></div>
-        </li>
-      </ul>
-    </div>`;
-    output += '<html><div class="tour_list">';
+  <ul class="nav1">
+    <li>
+      <div><a href="/map">지도</a></div>
+    </li>
+    <li>
+      <div><a href="/tour">중요관광지</a></div>
+    </li>
+  </ul>
+</div>`;
 
-    for (let i = 0; i < paginatedPlaces.length; i++) {
-      output += `<div class="image-container">`;
-      let imageUrl = `/image/tourimg/${paginatedPlaces[i].명소}.jpeg`;
-      output += `<a href="/places/${startIndex + i}"><img src="${imageUrl}" alt="${paginatedPlaces[i].명소}"></a>`;
-      output += `<span class="image-text">${paginatedPlaces[i].명소}</span>`;
-      output += `</div>`;
+    // Display places with images
+    output += '<html><div class="tour_list">';
+    for (let i = 0; i < places.length; i++) {
+      const imageUrl = `/image/tourimg/${places[i].명소}.jpeg`;
+      if (fs.existsSync(path.join(__dirname, '..', 'image', 'tourimg', `${places[i].명소}.jpeg`))) {
+        output += `<div class="image-container">`;
+        output += `<a href="/places/${i}"><img src="${imageUrl}" alt="${places[i].명소}"></a>`;
+        output += `<span class="image-text">${places[i].명소}</span>`;
+        output += `</div>`;
+      }
     }
+    output += '</div></html>';
+
+    // Display table for places without images
+    output += '<html><div class="tour_table">';
+    output += '<table>';
+
+
+    for (let i = 0; i < places.length; i++) {
+      if (!fs.existsSync(path.join(__dirname, '..', 'image', 'tourimg', `${places[i].명소}.jpeg`))) {
+        output += '<tr>';
+        output += `<td><div class="tourtd"><a href="/places/${i}">${places[i][headers[0]]}</a></div></td>`;
+        output += '</tr>';
+      }
+    }
+
+    output += '</table></div>';
 
     const cssFilePath = '/css/tour.css';
     output += `<link rel="stylesheet" type="text/css" href="${cssFilePath}">`;
     output += '</div></html>';
 
-    // 페이지네이션 링크 생성
-    let paginationLinks = '';
-    if (page > 1) {
-      paginationLinks += `<div class="tourpage"><a href="/tour?page=${page - 1}">이전</a></div> `;
-    }
-    if (page < totalPages) {
-      paginationLinks += `<div class="tourpage"><a href="/tour?page=${page + 1}">다음</a></div> `;
-    }
-
-    res.send(rendered + output + paginationLinks);
+    res.send(rendered + output);
   });
 });
+
 
   
   app.get('/places/:id', (req, res) => {
@@ -238,11 +241,17 @@ app.get('/tour', (req, res) => {
         </li>
     </div>`
 
-        output += '<div class="detail_container"><div class="main_container">'
-        const img = `/image/tourimg/${places[id].명소}.jpeg`;
-        output += `<img src="${img}">`;
-        output += `<span><h1>${place.명소}</h1>`;
-        output += `<p>${headers[1]}: ${place[headers[1]]}</p> </span></div>`;
+    output += '<div class="detail_container"><div class="main_container">';
+  
+    // Check if the image file exists
+    const imgPath = path.join(__dirname, '..', 'image', 'tourimg', `${place.명소}.jpeg`);
+    if (fs.existsSync(imgPath)) {
+      const img = `/image/tourimg/${place.명소}.jpeg`;
+      output += `<img src="${img}">`;
+    }
+  
+    output += `<span><h1>${place.명소}</h1>`;
+    output += `<p>${headers[1]}: ${place[headers[1]]}</p> </span></div>`;
 
 
   
@@ -265,6 +274,7 @@ app.get('/tour', (req, res) => {
       }
     });
   });
+
 
 // Default route
 app.get("/", (req, res) => {

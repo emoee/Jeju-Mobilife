@@ -374,3 +374,13 @@ h2 {
     text-align: center;
     margin: 20px;
 }
+
+.tourtd {
+    text-align: center;
+    font-size: 20px;
+}
+
+.tour_table {
+    display: flex;
+    justify-content: center;
+}
