@@ -30,6 +30,12 @@
             }
         </style>
         <script>
+            function toggleTooltip(element) {
+                var tooltip = element.querySelector('.tooltip');
+                if (tooltip) {
+                    tooltip.style.visibility = tooltip.style.visibility === 'visible' ? 'hidden' : 'visible';
+                }
+            }
             fetch("/data/jeju_med.csv")
                 .then(response => response.text())
                 .then(data => {
@@ -53,7 +59,7 @@
                         if (data.length > 8) {
                             var truncatedData = data.slice(0, 8) + '..';
                             var fullData = data;
-                            tableHTML += `<td><span class='show-more' onclick="showTooltip(this, '${fullData.replace("'", "\\'")}')">${truncatedData}<div class='tooltip'>${fullData}</div></span></td>`;
+                            tableHTML += `<td><span class='show-more' onclick="toggleTooltip(this)">${truncatedData}<div class='tooltip' style='visibility: hidden;'>${fullData}</div></span></td>`;
                         } else {
                             tableHTML += "<td>" + data + "</td>";
                         }
@@ -80,13 +86,6 @@
                             var aText = this.textContent;
                             location.href = `/area/table/recommend?data=${encodeURIComponent(aText)}`;
                         });
-                    }
-        
-                    function showTooltip(element, text) {
-                        var tooltip = element.querySelector('.tooltip');
-                        if (tooltip) {
-                            tooltip.style.visibility = 'visible';
-                        }
                     }
                 })
                 .catch(error => {
