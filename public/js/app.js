@@ -82,6 +82,26 @@ app.get("/job", (req, res) => {
   res.send(finalHtml);
 });
 
+app.get("/job/jeju", (req, res) => {
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
+  const rendered = ejs.render(template, { name: '' });
+  const htmlFilePath = path.join(__dirname, '..', 'html', 'job_jeju.html');
+  const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
+  const finalHtml = rendered + htmlContent;
+  res.send(finalHtml);
+});
+
+app.get("/job/table", (req, res) => {
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
+  const rendered = ejs.render(template, { name: '../' });
+  const htmlFilePath = path.join(__dirname, '..', 'html', 'job_detail.html');
+  const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
+  const finalHtml = rendered + htmlContent;
+  res.send(finalHtml);
+});
+
 app.get("/home", (req, res) => {
   const menuFilePath = path.join(__dirname, 'menu.ejs');
   const template = fs.readFileSync(menuFilePath, 'utf-8');
