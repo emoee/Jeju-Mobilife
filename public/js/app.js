@@ -95,61 +95,80 @@ app.get("/home", (req, res) => {
 app.get('/tour', (req, res) => {
   const tsvFilePath = path.join(__dirname, '..', 'data', 'tourdata2.tsv');
 
-    // const template = fs.readFileSync('menu.ejs', 'utf-8');
-    const menuFilePath = path.join(__dirname, 'menu.ejs');
-    const template = fs.readFileSync(menuFilePath, 'utf-8');
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
 
-    const rendered = ejs.render(template, { name: '' });
-  
-    fs.readFile(tsvFilePath, 'utf-8', (err, data) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
-        return;
+  const rendered = ejs.render(template, { name: '' });
+
+  fs.readFile(tsvFilePath, 'utf-8', (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('내부 서버 오류');
+      return;
+    }
+
+    // TSV 데이터 파싱
+    const lines = data.split('\n');
+    const headers = lines[0].split('\t');
+    const places = [];
+
+    for (let i = 1; i < lines.length; i++) {
+      const values = lines[i].split('\t');
+      const place = {};
+
+      for (let j = 0; j < headers.length; j++) {
+        place[headers[j]] = values[j];
       }
-  
-      // TSV 데이터 파싱
-      const lines = data.split('\n');
-      const headers = lines[0].split('\t');
-      const places = [];
-  
-      for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split('\t');
-        const place = {};
-  
-        for (let j = 0; j < headers.length; j++) {
-          place[headers[j]] = values[j];
-        }
-  
-        places.push(place);
-      }
-  
-      // 명소 리스트 출력
-      let output = `<div class="colorbox" style="width: 1280px; height: 70px; margin-top: 2px;">
+
+      places.push(place);
+    }
+
+    // 페이지네이션
+    const itemsPerPage = 20;
+    const page = parseInt(req.query.page) || 1;
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedPlaces = places.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(places.length / itemsPerPage);
+
+    // 명소 리스트 출력
+    let output = `<div class="colorbox" style="width: 1280px; height: 70px; margin-top: 2px;">
       <ul class="nav1">
-      <li>
+        <li>
           <div><a href="/map">지도</a></div>
-      </li>
-      <li>
+        </li>
+        <li>
           <div><a href="/tour">중요관광지</a></div>
-      </li>
-  </div>`
-      output += '<html><div class="tour_list">';
+        </li>
+      </ul>
+    </div>`;
+    output += '<html><div class="tour_list">';
 
-  
-      for (let i = 0; i < places.length; i++) {
-          output += `<div class="image-container">`
-          let imageUrl = `/image/tourimg/${places[i].명소}.jpeg`;
-          output += `<a href="/places/${i}"><img src="${imageUrl}" alt="${places[i].명소}"></a>`;
-          output += `<span class="image-text">${places[i].명소}</span>`
-          output += `</div>`
-        }
-      const cssFilePath = '/css/tour.css';
-      output += `<link rel="stylesheet" type="text/css" href="${cssFilePath}">`;
-      output += '</div></html>';
-      res.send(rendered + output);
-    });
+    for (let i = 0; i < paginatedPlaces.length; i++) {
+      output += `<div class="image-container">`;
+      let imageUrl = `/image/tourimg/${paginatedPlaces[i].명소}.jpeg`;
+      output += `<a href="/places/${startIndex + i}"><img src="${imageUrl}" alt="${paginatedPlaces[i].명소}"></a>`;
+      output += `<span class="image-text">${paginatedPlaces[i].명소}</span>`;
+      output += `</div>`;
+    }
+
+    const cssFilePath = '/css/tour.css';
+    output += `<link rel="stylesheet" type="text/css" href="${cssFilePath}">`;
+    output += '</div></html>';
+
+    // 페이지네이션 링크 생성
+    let paginationLinks = '';
+    if (page > 1) {
+      paginationLinks += `<div class="tourpage"><a href="/tour?page=${page - 1}">이전</a></div> `;
+    }
+    if (page < totalPages) {
+      paginationLinks += `<div class="tourpage"><a href="/tour?page=${page + 1}">다음</a></div> `;
+    }
+
+    res.send(rendered + output + paginationLinks);
   });
+});
+
   
   app.get('/places/:id', (req, res) => {
 
