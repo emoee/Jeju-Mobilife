@@ -21,6 +21,16 @@ app.use('/css', express.static(path.join(__dirname, '..', 'css')));
 app.use('/js', express.static(path.join(__dirname, '..', 'js')));
 
 // Routes
+app.get("/institution", (req, res) => {
+  const menuFilePath = path.join(__dirname, 'menu.ejs');
+  const template = fs.readFileSync(menuFilePath, 'utf-8');
+  const rendered = ejs.render(template, { name: '' });
+  const htmlFilePath = path.join(__dirname, '..', 'html', 'institution.html');
+  const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
+  const finalHtml = rendered + htmlContent;
+  res.send(finalHtml);
+});
+
 app.get("/area", (req, res) => {
   const menuFilePath = path.join(__dirname, 'menu.ejs');
   const template = fs.readFileSync(menuFilePath, 'utf-8');

@@ -15,43 +15,46 @@
             #div_area_table {
                 text-align : center;
               }
+            progress {
+                width: 50px; /* 원하는 너비 값으로 설정 */
+            }
         </style>
         <script>
-            fetch("/data/jeju_dong.csv")
+            fetch("/data/jeju_med.csv")
             .then(response => response.text())
             .then(data => {
                 var lines = data.split("\n");
                 var tableHTML = "<table>";
                 tableHTML += `<tr>
-                                <th>주거 지역</th>
-                                <th>순위</th>
-                                <th>백분위</th>
-                                <th>행정시</th>
-                                <th>비고</th>
+                                <th>시설</th>
+                                <th>상세</th>
+                                <th>시설명</th>
+                                <th>소재지</th>
+                                <th>전화번호</th>
+                                <th>이용률</th>
+                                <th>정원</th>
+                                <th>현원</th>
                               </tr>`;
                 for (var i = 1; i < lines.length; i++) { // Start from the second row
                     var cells = lines[i].split(",");
                     tableHTML += "<tr>";
-                    tableHTML += "<td><a href='#' class='recommend'>" + cells[1] + "</td>";
-                    tableHTML += "<td>" + cells[13] + "</td>";
-                    tableHTML += "<td><progress value='" + cells[12] + "' max='100'></progress></td>";
                     tableHTML += "<td>" + cells[0] + "</td>";
-                                        
-                    if (parseInt(cells[14]) > 0){
-                        tableHTML += "<td><img src='/image/rank" + cells[14]+ ".png' style='width:30px; height:41px;'/>매매 평균"
-                    } else { 
-                        tableHTML += "<td>"
-                    }
-                    if (parseInt(cells[15]) > 0){
-                        tableHTML += "<img src='/image/rank" + cells[15]+ ".png' style='width:30px; height:41px;'/>안전시설"
+                    if (cells[16] != ""){
+                        tableHTML += "<td>" + cells[1] + "</td>";
                     }else { 
-                        tableHTML += "";
+                        tableHTML += "<td></td>";
                     }
-                    if (parseInt(cells[16]) > 0){
-                        tableHTML += "<img src='/image/rank" + cells[16]+ ".png' style='width:30px; height:41px;'/>도움시설"
+                    tableHTML += "<td>" + cells[2] + "</td>";
+                    tableHTML += "<td>" + cells[5] + "</td>";
+                    tableHTML += "<td>" + cells[6] + "</td>";
+                    if ((cells[8] / cells[7]) > 0){
+                        tableHTML += "<td><progress value='" +  (cells[8] / cells[7])  + "' max='1'></progress></td>";
                     }else { 
-                        tableHTML += "";
+                        tableHTML += "<td></td>";
                     }
+                    tableHTML += "<td>" + cells[7] + "</td>";
+                    tableHTML += "<td>" + cells[8] + "</td>";
+                    
                     tableHTML += "</tr>";
                     console.log(tableHTML)
                 }
@@ -88,9 +91,8 @@
         <div> <!-- 본문 내용 -->
             <br><br>
             <div id="div_table"> <!-- 주거 지역 추천 -->
-                <h2 align="left">제주도 주거 추천 지역</h3><br>
-                <h5 style="text-align:left">* 아래 읍면동은 최근 3년 이내에 아파트 매매가 이루어진 지역을 대상으로 선정하였습니다.</h3>
-                <h5 style="text-align:left">* 안전 시설은 제주도 마을별 경찰서(파출소, 지구대), 소방서, 병원, 약국 등을 말합니다.</h3>
+                <h2 align="left">장애인 복지 시설</h3><br>
+                <h5 style="text-align:left">* 정원/현원은 데이터 수집일 기준입니다. 자세한 내용은 전화로 문의하시기 바랍니다.</h3>
                 
                 <table id="div_area_table">
                 </table><br>
