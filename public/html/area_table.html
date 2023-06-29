@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="../css/area_style.css">  <!--css연동-->
+        <link rel="stylesheet" type="text/css" href="/css/area_style.css">  <!--css연동-->
         <title>모빌라이프</title>
         <style>
             #map_canvas {
@@ -16,7 +16,7 @@
               }
         </style>
         <script>
-            fetch("../data/jeju_dong.csv")
+            fetch("/data/jeju_dong.csv")
             .then(response => response.text())
             .then(data => {
                 var lines = data.split("\n");
@@ -35,9 +35,24 @@
                     tableHTML += "<td>" + cells[13] + "</td>";
                     tableHTML += "<td><progress value='" + cells[12] + "' max='100'></progress></td>";
                     tableHTML += "<td>" + cells[0] + "</td>";
-                    tableHTML += "<td>" + cells[14] + "</td>";
+                                        
+                    if (parseInt(cells[14]) > 0){
+                        tableHTML += "<td><img src='/image/rank" + cells[14]+ ".png' style='width:50px; height:68px;'/>매매 평균"
+                    } else { 
+                        tableHTML += "<td>"
+                    }
+                    if (parseInt(cells[15]) > 0){
+                        tableHTML += "<img src='/image/rank" + cells[15]+ ".png' style='width:50px; height:68px;'/>안전시설"
+                    }else { 
+                        tableHTML += "";
+                    }
+                    if (parseInt(cells[16]) > 0){
+                        tableHTML += "<img src='/image/rank" + cells[16]+ ".png' style='width:50px; height:68px;'/>도움시설"
+                    }else { 
+                        tableHTML += "";
+                    }
                     tableHTML += "</tr>";
-                    
+                    console.log(tableHTML)
                 }
                 tableHTML += "</table>";
                 document.getElementById("div_area_table").innerHTML = tableHTML; // Add the table to the HTML element
@@ -47,7 +62,7 @@
                 for (var i = 0; i < aTags.length; i++) {
                 aTags[i].addEventListener('click', function() {
                     var aText = this.textContent;
-                    location.href = `../html/recommend_area.html?data=${encodeURIComponent(aText)}`;
+                    location.href = `/area/table/recommend?data=${encodeURIComponent(aText)}`;
                 });
                 }
             })
@@ -57,13 +72,13 @@
         </script>
     </head>
     <body>
-        <div class="colorbox" style="width: 1280px; height: 70px; margin-top: 2px;">
+        <div class="colorbox" style="width: 80%; height: 70px; margin-top: 2px;">
             <ul class="nav1">
             <li>
                 <div><a href="/area">제주살이</a></div>
             </li>
             <li>
-                <div><a href="/area_table">추천지역</a></div>
+                <div><a href="/area/table">추천지역</a></div>
             </li>
             <li>
                 <div><a href="#">장애인 전용 편의 시설</a></div>
@@ -73,11 +88,13 @@
             <br><br>
             <div id="div_table"> <!-- 주거 지역 추천 -->
                 <h2 align="left">제주도 주거 추천 지역</h3><br>
-                <h5 align="left">* 아래 읍면동은 최근 3년 이내에 아파트 매매가 이루어진 지역을 대상으로 선정하였습니다.</h3>
+                <h5 style="text-align:left">* 아래 읍면동은 최근 3년 이내에 아파트 매매가 이루어진 지역을 대상으로 선정하였습니다.</h3>
+                <h5 style="text-align:left">* 안전 시설은 제주도 마을별 경찰서(파출소, 지구대), 소방서, 병원, 약국 등을 말합니다.</h3>
+                
                 <table id="div_area_table">
                 </table><br>
             </div> 
         </div>
     </body>
-    <script src="../js/area_send.js" defer></script>
+    <script src="/js/area_send.js" defer></script>
 </html>

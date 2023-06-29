@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../css/area_style.css">  <!--css연동-->
+    <link rel="stylesheet" type="text/css" href="../css/tour.css">  <!--css연동-->
     <title>모빌라이프</title>
     <style>
         #map_canvas {
-            height: 500px;
+            height: 600px;
             margin: 0 auto; /* 수평 가운데 정렬 */
-            width: 55%;
+            width: 75%;
         }
         #div_area_table {
             text-align: center;
@@ -17,6 +17,18 @@
     </style>
 </head>
 <body>
+    <div class="colorbox" style="width: 1280px; height: 70px; margin-top: 2px;">
+        <ul class="nav1">
+        <li>
+            <div><a href="/map">지도</a></div>
+        </li>
+        <li>
+            <div><a href="/tour">주요관광지</a></div>
+        </li>
+        <li>
+            <div><a href="#">추천경로</a></div>
+        </li>
+    </div>
     <div> <!-- 본문 내용 -->
         <div> <!-- !!!구글 지도 구역!!! -->
             <div id="map_canvas"></div>
@@ -32,7 +44,7 @@
             const center_loc = { lat: 33.364219, lng: 126.529098 };
             const infowindow = new google.maps.InfoWindow();
             const map = new google.maps.Map(document.getElementById("map_canvas"), {
-                zoom: 10,
+                zoom: 10.5,
                 center: center_loc
             });
             
@@ -56,11 +68,19 @@
                             title: placeName
                         });
                         
-                        // 마커 클릭 이벤트 처리
-                        marker.addListener('click', function() {
-                            infowindow.setContent(placeName);
+                        marker.addListener('mouseover', function() {
+                            infowindow.setContent(`<img src="../image/tourimg/${columns[0]}.jpeg" alt="Image"><br>` + placeName);
                             infowindow.open(map, marker);
+                            console.log(columns[3]);
                         });
+
+                        marker.addListener('click', function() {
+                            const url = `/places/${placeNo}`; // 이동할 페이지의 URL
+
+                            // 페이지 이동
+                            window.location.href = url;
+                            });
+
                     }
                 })
                 .catch(error => {

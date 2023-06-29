@@ -301,9 +301,12 @@ h2 {
     text-align: center;
     position: relative;
     margin: 20px;
-    opacity: 60%;
     /* 추가적인 스타일링을 원한다면 여기에 적용합니다 */
   }
+
+.image-container img {
+    opacity: 60%;
+}
   
 .image-text {
     position: absolute;
@@ -316,6 +319,57 @@ h2 {
     /* 추가적인 스타일링을 원한다면 여기에 적용합니다 */
 }
 
-.detail_container{
+/* .detail_container{
     text-align: center;
+} */
+
+.touricon {
+    display: flex;
+    align-items: center;
+}
+
+.touricon img {
+    margin: 20px;
+}
+
+.main_container {
+    display: flex;
+    align-items: center;
+}
+
+.main_container img {
+    margin: 20px;
+}
+
+.main_container span {
+    margin-right: 50px;
+}
+
+.colorbox {
+    background-color: orange;
+    position: relative;
+    height: 70px;
+    width: 1280px;
+    margin-left: 128px;
+    margin-top: -30px;
+}
+
+.nav1  {
+    display: flex;
+    margin-left: 99px;
+    font-size: 18px;
+}
+
+.nav1 > li {  
+    margin: 20px;
+}
+
+.nav1 a {
+    color: #ffffff;
+    background-color: #f1f2f300;
+}
+
+.detail_container {
+    margin-left: 128px;
+    margin-right: 128px;
 }

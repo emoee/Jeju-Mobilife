@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="../css/area_style.css">  <!--css연동-->
+        <link rel="stylesheet" type="text/css" href="/css/area_style.css">  <!--css연동-->
         <title>모빌라이프</title>
         <style>
             /* CSS styles for centering the table */
@@ -19,7 +19,7 @@
             }
         </style>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script type="text/javascript" src="../js/config.js"></script>
+        <script type="text/javascript" src="/js/config.js"></script>
         <script> //구글 지도
             const markers = []
             var map = 0
@@ -35,7 +35,7 @@
                     center: center_loc,
                 });
                 
-                fetch("../data/jeju_recommend.csv")
+                fetch("/data/jeju_recommend.csv")
                 .then(response => response.text())
                 .then(data => {
                     console.log("성공");
@@ -64,7 +64,7 @@
                                     case cells[j] === "해양경찰서" || cells[j] === "해양파출소":
                                         icon = "captain.png"
                                         break;
-                                    case cells[j] === "병원" || cells[j] === "보건소" || cells[j] === "한의원":
+                                    case cells[j] === "병원" || cells[j] === "종합병원" || cells[j] === "보건소" || cells[j] === "한의원":
                                         icon = "hospital.png"
                                         break;
                                     case cells[j] === "초등학교" || cells[j] === "중학교" || cells[j] === "고등학교":
@@ -135,16 +135,16 @@
                                         break;
                                 }
                                 if (icon == "") {
-                                    tableHTML += "<td>" + cells[j] + "</td>";
+                                    tableHTML += "<td>" + cells[j].trim() + "</td>";
                                 } else {
-                                    tableHTML += "<td>" + "<img src='../image/" + icon + "' style='width:50px; height:50px;'/><br>" + cells[j] + "</td>";
+                                    tableHTML += "<td style='text-align: center; vertical-align: middle;'>" + "<img src='/image/" + icon + "' style='width:50px; height:50px;'/><br>" + cells[j] + "</td>";
                                 }
                             }
                             tableHTML += "</tr>";
                             
                             const latitude = parseFloat(cells[4]);
                             const longitude = parseFloat(cells[5]);
-                            const placeName = cells[1];
+                            const placeName = cells[1].trim();
                             const marker = new google.maps.Marker({
                                 map: map,
                                 title: placeName,
@@ -162,8 +162,6 @@
                                 infowindow.open(map, marker);
                                 }
                             })(marker, i), { passive: true });
-
-
                         }
                     }
                     tableHTML += "</table>";
@@ -187,7 +185,7 @@
                 <div><a href="/area">제주살이</a></div>
             </li>
             <li>
-                <div><a href="/area_table">추천지역</a></div>
+                <div><a href="/area/table">추천지역</a></div>
             </li>
             <li>
                 <div><a href="#">장애인 전용 편의 시설</a></div>
