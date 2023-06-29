@@ -123,16 +123,13 @@ app.get('/tour', (req, res) => {
       <li>
           <div><a href="/tour">중요관광지</a></div>
       </li>
-      <li>
-          <div><a href="#">추천경로</a></div>
-      </li>
   </div>`
       output += '<html><div class="tour_list">';
 
   
       for (let i = 0; i < places.length; i++) {
           output += `<div class="image-container">`
-          let imageUrl = `../image/tourimg/${places[i].명소}.jpeg`;
+          let imageUrl = `/image/tourimg/${places[i].명소}.jpeg`;
           output += `<a href="/places/${i}"><img src="${imageUrl}" alt="${places[i].명소}"></a>`;
           output += `<span class="image-text">${places[i].명소}</span>`
           output += `</div>`
@@ -190,13 +187,10 @@ app.get('/tour', (req, res) => {
         <li>
             <div><a href="/tour">중요관광지</a></div>
         </li>
-        <li>
-            <div><a href="#">추천경로</a></div>
-        </li>
     </div>`
 
         output += '<div class="detail_container"><div class="main_container">'
-        const img = `../image/tourimg/${places[id].명소}.jpeg`;
+        const img = `/image/tourimg/${places[id].명소}.jpeg`;
         output += `<img src="${img}">`;
         output += `<span><h1>${place.명소}</h1>`;
         output += `<p>${headers[1]}: ${place[headers[1]]}</p> </span></div>`;
@@ -205,7 +199,7 @@ app.get('/tour', (req, res) => {
   
         for (let j = 2; j < headers.length; j++) {
           output += '<div class="touricon">'
-          const img2 = `../image/touricon/icon${j}.png`;
+          const img2 = `/image/touricon/icon${j}.png`;
           output += `<img src="${img2}" wight = "50px" height = "50px">`;
           output += `<p>${headers[j]}: ${place[headers[j]]}</p> </div>`;
         }
