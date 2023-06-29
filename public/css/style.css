@@ -49,24 +49,16 @@ h2 {
 
 /* -- 공통 요소들 -- */
 
-.intro {
-    /*text-align: left; */
-    margin-left: 50px;
-    margin-top: 10px;
-}
-
 .LOGO_image {
     margin: 30px;
 }
 
-
 .header {
     display: flex;
-    width:  100%;
+    width: 100%;
     margin: auto;
     background:rgba(0, 0, 0, 0);
     height: 86px;
-    margin-left: 150px;
 }
 
 .searchArea {
@@ -151,7 +143,7 @@ h2 {
     position: relative;
     top: -66px;
     display: flex;
-    width:  100%;
+    width: 100%;
     background: white;
     box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.1); 
     margin: auto;

@@ -67,13 +67,12 @@ h2 {
 
 .header {
     display: flex;
-    width: 1300px;
+    width:  100%;
     margin: auto;
     background:rgba(0, 0, 0, 0);
     height: 86px;
     margin-left: 150px;
 }
-
 .searchArea {
     width: 200px;
     height: 28px;
@@ -108,7 +107,7 @@ h2 {
 .nav{
     display: flex;
     justify-content: flex-end;
-    width: calc(1280px - 550px);
+    width: calc(100% - 550px);
     font-size: 20px;
     font-weight: bold;
     position: relative;
@@ -153,11 +152,11 @@ h2 {
 
 .colorbox {
     background-color: orange;
+    text-align: center;
     position: relative;
+    width:  100%;
     height: 70px;
-    width: 1280px;
-    margin-left: 128px;
-    margin-top: -30px;
+    margin: auto;
 }
 
 .nav1  {

@@ -47,13 +47,6 @@ h2 {
     opacity: 0.8;
 }
 
-/* -- 공통 요소들 -- */
-
-.intro {
-    text-align: left;
-    margin-left: 50px;
-}
-
 .image1 {
     opacity: 0.8;
     text-align: left;
@@ -347,11 +340,11 @@ h2 {
 
 .colorbox {
     background-color: orange;
+    text-align: center;
     position: relative;
-    height: 70px;
     width:  100%;
-    margin-left: 128px;
-    margin-top: -30px;
+    height: 70px;
+    margin: auto;
 }
 
 .nav1  {
