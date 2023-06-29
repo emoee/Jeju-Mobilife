@@ -83,7 +83,7 @@ app.get("/home", (req, res) => {
 });
 
 app.get('/tour', (req, res) => {
-    const tsvFilePath = '/data/tourdata2.tsv';
+  const tsvFilePath = path.join(__dirname, '..', 'data', 'tourdata2.tsv');
 
     // const template = fs.readFileSync('menu.ejs', 'utf-8');
     const menuFilePath = path.join(__dirname, 'menu.ejs');
@@ -137,7 +137,7 @@ app.get('/tour', (req, res) => {
           output += `<span class="image-text">${places[i].명소}</span>`
           output += `</div>`
         }
-      const cssFilePath = '../css/tour.css';
+      const cssFilePath = '/css/tour.css';
       output += `<link rel="stylesheet" type="text/css" href="${cssFilePath}">`;
       output += '</div></html>';
       res.send(rendered + output);
@@ -146,7 +146,7 @@ app.get('/tour', (req, res) => {
   
   app.get('/places/:id', (req, res) => {
 
-    const tsvFilePath = '/data/tourdata2.tsv';
+    const tsvFilePath = path.join(__dirname, '..', 'data', 'tourdata2.tsv');
     const id = req.params.id;
 
     // const template = fs.readFileSync('menu.ejs', 'utf-8');
@@ -210,7 +210,7 @@ app.get('/tour', (req, res) => {
           output += `<p>${headers[j]}: ${place[headers[j]]}</p> </div>`;
         }
   
-        const cssFilePath = '../css/tour.css';
+        const cssFilePath = '/css/tour.css';
         
         output += `<link rel="stylesheet" type="text/css" href="${cssFilePath}">`;
         output += `</div>`
