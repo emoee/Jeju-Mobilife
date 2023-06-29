@@ -83,7 +83,7 @@ app.get("/home", (req, res) => {
 });
 
 app.get('/tour', (req, res) => {
-    const tsvFilePath = '../data/tourdata2.tsv';
+    const tsvFilePath = '/data/tourdata2.tsv';
 
     // const template = fs.readFileSync('menu.ejs', 'utf-8');
     const menuFilePath = path.join(__dirname, 'menu.ejs');
@@ -146,7 +146,7 @@ app.get('/tour', (req, res) => {
   
   app.get('/places/:id', (req, res) => {
 
-    const tsvFilePath = '../data/tourdata2.tsv';
+    const tsvFilePath = '/data/tourdata2.tsv';
     const id = req.params.id;
 
     // const template = fs.readFileSync('menu.ejs', 'utf-8');
