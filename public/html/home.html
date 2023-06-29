@@ -4,7 +4,37 @@
         <meta charset="UTF-8">
         <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="/css/style.css">  <!--css연동-->
+        <link rel="stylesheet" type="text/css" href="/css/tour.css">  <!--css연동-->
         <title>모빌라이프</title>
+        <script>
+            // 현재 날짜를 가져오는 함수
+            function getCurrentDate() {
+                const currentDate = new Date();
+                const year = currentDate.getFullYear();
+                const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+                const day = String(currentDate.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+            
+            // 현재 날짜로부터 한 달 뒤의 날짜를 계산하는 함수
+            function getEndDate() {
+                const currentDate = new Date();
+                const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate());
+                const year = endDate.getFullYear();
+                const month = String(endDate.getMonth() + 1).padStart(2, '0');
+                const day = String(endDate.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+            
+            // 링크의 날짜 부분을 현재 날짜와 한 달 뒤의 날짜로 변경하는 함수
+            function updateLinkDate() {
+                const link = 'https://www.vms.or.kr/partspace/recruit.do?area=0116&areagugun=&acttype=&status=1&volacttype=&sttdte=__STARTDATE__&enddte=__ENDDATE__&termgbn=&searchType=content&searchValue=장애&page=1';
+                const startDate = getCurrentDate();
+                const endDate = getEndDate();
+                const updatedLink = link.replace(/__STARTDATE__/g, startDate).replace(/__ENDDATE__/g, endDate);
+                return updatedLink;
+            }  
+        </script>
     </head>
     <body>
         <div class="wrap">
@@ -42,7 +72,7 @@
                     </li>
                     <li>
                         <div>
-                            <a href="#">
+                            <a href="#" onclick="location.href=updateLinkDate()">
                             <div class="block1">봉사정보</div>
                             <div class="block2">후원</div></a>
                         </div>
@@ -61,7 +91,7 @@
                         <div class="box2_img">
                             <img src="../image/box2.png" style="width: 100px; height: 100px">
                         </div>
-                        <a href="#">
+                        <a href="/tour">
                         <div class="block4">관광안내</div>
                         <div class="block2">안전한 관광이 필요하신가요?</div></a>
                     </li>
@@ -69,7 +99,7 @@
                         <div class="box1_img">
                             <img src="../image/box1.png" style="width: 100px; height: 100px">
                         </div>
-                        <a href="#">
+                        <a href="/job">
                         <div class="block4">취업지원</div>
                         <div class="block2">취업정보를 한번에!</div></a>
                     </li>
@@ -77,7 +107,7 @@
                         <div class="box3_img">
                             <img src="../image/box3.png" style="width: 100px; height: 100px">
                         </div>
-                        <a href="#">
+                        <a href="/area">
                         <div class="block4">주거</div>
                         <div class="block2">제주에서 행복한 주거생활</div></a>
                     </li>
