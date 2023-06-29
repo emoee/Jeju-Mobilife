@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/css/jobbbb_style.css">  <!--css연동-->
+        <link rel="stylesheet" type="text/css" href="/css/tour.css">
+        <title>모빌라이프</title>
+        <!DOCTYPE html>
+        <script>
+            fetch("data/jeju_job.csv")
+            .then(response => response.text())
+            .then(data => {
+                var lines = data.split("\n");
+                var tableHTML = "<table>";
+                tableHTML += `<tr>
+                                <th>전체</th>
+                                <th>대기업</th>
+                                <th>중견,중소</th>
+                                <th>공기업,공사</th>
+                                <th>외국계</th>
+                              </tr>`;
+                for (var i = 1; i < lines.length; i++) { // Start from the second row
+                    var cells = lines[i].split(",");
+                    tableHTML += "<tr>";
+                    tableHTML += "<td><a href='#' class='recommend1'>" + cells[1] + "</td>";
+                    tableHTML += "<td>" + cells[13] + "</td>";
+                    tableHTML += "<td><progress value='" + cells[12] + "' max='100'></progress></td>";
+                    tableHTML += "<td>" + cells[0] + "</td>";
+                                        
+                    if (parseInt(cells[14]) > 0){
+                        tableHTML += "<td><img src='/image/rank" + cells[14]+ ".png' style='width:50px; height:68px;'/>매매 평균"
+                    } else { 
+                        tableHTML += "<td>"
+                    }
+                    if (parseInt(cells[15]) > 0){
+                        tableHTML += "<img src='/image/rank" + cells[15]+ ".png' style='width:50px; height:68px;'/>안전시설"
+                    }else { 
+                        tableHTML += "";
+                    }
+                    if (parseInt(cells[16]) > 0){
+                        tableHTML += "<img src='/image/rank" + cells[16]+ ".png' style='width:50px; height:68px;'/>도움시설"
+                    }else { 
+                        tableHTML += "";
+                    }
+                    tableHTML += "</tr>";
+                    console.log(tableHTML)
+                }
+                tableHTML += "</table>";
+                document.getElementById("div_area_table").innerHTML = tableHTML; // Add the table to the HTML element
+            
+                // Add event listeners to the 'recommend' class links
+                var aTags = document.getElementsByClassName('recommend1');
+                for (var i = 0; i < aTags.length; i++) {
+                aTags[i].addEventListener('click', function() {
+                    var aText = this.textContent;
+                    location.href = `/jobbbb/table/recommend1?data=${encodeURIComponent(aText)}`;
+                });
+                }
+            })
+            .catch(error => {
+                console.log("오류 발생: " + error);
+            });
+        </script>
+    </head>
+    <body>
+        <div class="colorbox" style="width: 80%; height: 70px; margin-top: 2px;">
+            <ul class="nav1">
+            <li>
+                <div><a href="/jobbbb">채용공고</a></div>
+            </li>
+        </div>
+        <div> <!-- 본문 내용 -->
+            <br><br>
+            <div id="div_table"> <!-- 주거 지역 추천 -->
+                <h2 align="left">제주도 주거 추천 지역</h3><br>
+                <h5 style="text-align:left">* 아래 읍면동은 최근 3년 이내에 아파트 매매가 이루어진 지역을 대상으로 선정하였습니다.</h3>
+                <h5 style="text-align:left">* 안전 시설은 제주도 마을별 경찰서(파출소, 지구대), 소방서, 병원, 약국 등을 말합니다.</h3>
+                
+                <table id="div_jobbbb_table">
+                </table><br>
+            </div> 
+        </div>
+    </body>
+    <script src="/js/job.js" defer></script>
+</html>
