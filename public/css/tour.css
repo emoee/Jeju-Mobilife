@@ -60,6 +60,9 @@ h2 {
     float: right;
    
 }
+.LOGO_image {
+    margin: 30px;
+}
 
 .header {
     display: flex;
