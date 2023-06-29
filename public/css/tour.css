@@ -110,7 +110,7 @@ h2 {
 .nav{
     display: flex;
     justify-content: flex-end;
-    width: calc(1280px - 300px);
+    width: calc(100% - 300px);
     font-size: 20px;
     font-weight: bold;
 }
