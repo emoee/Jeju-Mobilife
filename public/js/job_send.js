@@ -5,7 +5,7 @@ window.onload = function() {    // Your JavaScript code here
         aTags[i].addEventListener('click', function() {
             var aText = this.textContent;
             console.log(aText)
-            location.href = `/jobbbb/table/recommend?data=${encodeURIComponent(aText)}`;
+            location.href = `/job/table?data=${encodeURIComponent(aText)}`;
         });
         }
     }

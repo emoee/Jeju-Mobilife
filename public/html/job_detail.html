@@ -27,53 +27,59 @@
                     tooltip.style.visibility = tooltip.style.visibility === 'visible' ? 'hidden' : 'visible';
                 }
             }
+
+            const receivedData = decodeURI(location.href.split('?')[1]).split('=')[1].trim();
+            console.log(receivedData);
             fetch("/data/job_data.csv")
                 .then(response => response.text())
                 .then(data => {
                     var lines = data.split("\n");
                     var tableHTML = "<table>";
-                    tableHTML += `<tr>
-                                <th>No.</th>
-                                <th>회사명</th>
-                                <th>공고명</th>
-                                <th>시작일</th>
-                                <th>마감일</th>
-                              </tr>`;
                     for (var i = 1; i < lines.length; i++) { // Start from the second row
                         var cells = lines[i].split(",");
-                        tableHTML += "<tr>";
-                        tableHTML += "<td>" + cells[11] + "</td>";
-                        tableHTML += "<td><a href='#' class='recommend' data-custom-value='" + cells[11] + "'>" + cells[1] + "</td>";
-                        var data = cells[0];
-                        if (data.length > 40) {
-                            var truncatedData = data.slice(0, 40) + '..';
-                            var fullData = data;
-                            tableHTML += `<td><a href='#' class='recommend'  data-custom-value='${cells[11]}'><span class='show-more' onclick="toggleTooltip(this)">${truncatedData}<div class='tooltip' style='visibility: hidden;'>${fullData}</div></span></td>`;
-                        } else {
-                            tableHTML += "<td><a href='#' class='recommend' data-custom-value='" + cells[11] + "'>" + data + "</td>";
+                        if (cells[11].trim() === receivedData){
+                            console.log(cells[11])
+                            tableHTML += "<tr><th scope='row'>회사명</th>";
+                            tableHTML += "<td>" + cells[1] + "</td></tr>";
+
+                            tableHTML += "<tr><th scope='row'>공고명</th>";
+                            tableHTML += "<td>" + cells[0] + "</td></tr>";
+
+                            tableHTML += "<tr><th scope='row'>경력</th>";
+                            tableHTML += "<td>" + cells[2] + "</td></tr>";
+
+                            tableHTML += "<tr><th scope='row'>학력</th>";
+                            tableHTML += "<td>" + cells[3] + "</td></tr>";
+
+                            tableHTML += "<tr><th scope='row'>우대</th>";
+                            tableHTML += "<td>" + cells[4] + "</td></tr>";
+
+                            tableHTML += "<tr><th scope='row'>고용형태</th>";
+                            tableHTML += "<td>" + cells[5] + "</td></tr>";
+    
+                            tableHTML += "<tr><th scope='row'>급여</th>";
+                            tableHTML += "<td>" + cells[6] + "</td></tr>";
+    
+
+                            tableHTML += "<tr><th scope='row'>지역</th>";
+                            tableHTML += "<td>" + cells[7] + "</td></tr>";
+
+                            tableHTML += "<tr><th scope='row'>시간</th>";
+                            tableHTML += "<td>" + cells[8] + "</td></tr>";
+    
+                            tableHTML += "<tr><th scope='row'>시작일</th>";
+                            tableHTML += "<td>" + cells[9] + "</td></tr>";
+
+                            tableHTML += "<tr><th scope='row'>마감일</th>";
+                            tableHTML += "<td>" + cells[10] + "</td></tr>";
                         }
-                        tableHTML += "<td>" + cells[9] + "</td>";
-                        tableHTML += "<td>" + cells[10] + "</td>";
-                        tableHTML += "</tr>";
                     }
                     tableHTML += "</table>";
                     document.getElementById("div_area_table").innerHTML = tableHTML; // Add the table to the HTML element
-        
-                    // Add event listeners to the 'recommend' class links
-                // Add event listeners to the 'recommend' class links
-                var aTags = document.getElementsByClassName('recommend');
-                for (var i = 0; i < aTags.length; i++) {
-                aTags[i].addEventListener('click', function () {
-                    var aText = this.getAttribute('data-custom-value').replace(/\r?\n|\r/g, '');;
-                    location.href = `/job/table?data=${encodeURIComponent(aText)}`;
-                });
-                }
-
                 })
                 .catch(error => {
                     console.log("오류 발생: " + error);
                 });
-                
         </script>
     </head>
     <body>
@@ -87,7 +93,7 @@
             
         </div><br><br>
         <div id="div_table"> <!-- 주거 지역 추천 -->
-            <h2 align="center">채용 공고</h3><br>
+            <h2 align="center">상세 내용</h3><br>
             <h5 style="text-align:left">* 데이터 수집일 (6/29) 기준입니다. 자세한 내용은 문의하시기 바랍니다.</h3>
             <div id="div_area_table"></div><br>
         </div>

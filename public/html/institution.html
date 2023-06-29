@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gowun+Dodum&family=Maven+Pro&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/css/area_style.css">  <!--css연동-->
+        <link rel="stylesheet" type="text/css" href="/css/tour.css">  <!--css연동-->
+        <title>모빌라이프</title>
+        <style>
+            #map_canvas {
+                height: 500px;
+                margin: 0 auto; /* 수평 가운데 정렬 */
+                width: 55%;
+            }
+            #div_area_table {
+                text-align: center;
+            }
+            progress {
+                width: 50px; /* 원하는 너비 값으로 설정 */
+            }
+            .tooltip {
+                position: absolute;
+                background-color: #f9f9f9;
+                border: 1px solid #ccc;
+                padding: 5px;
+                max-width: 200px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        </style>
+        <script>
+            function toggleTooltip(element) {
+                var tooltip = element.querySelector('.tooltip');
+                if (tooltip) {
+                    tooltip.style.visibility = tooltip.style.visibility === 'visible' ? 'hidden' : 'visible';
+                }
+            }
+            fetch("/data/jeju_med.csv")
+                .then(response => response.text())
+                .then(data => {
+                    var lines = data.split("\n");
+                    var tableHTML = "<table>";
+                    tableHTML += `<tr>
+                                <th>시설</th>
+                                <th>시설명</th>
+                                <th>소재지</th>
+                                <th>전화번호</th>
+                                <th>이용률</th>
+                                <th>정원</th>
+                                <th>현원</th>
+                              </tr>`;
+                    for (var i = 1; i < lines.length; i++) { // Start from the second row
+                        var cells = lines[i].split(",");
+                        tableHTML += "<tr>";
+                        tableHTML += "<td>" + cells[0] + "</td>";
+        
+                        var data = cells[2];
+                        if (data.length > 8) {
+                            var truncatedData = data.slice(0, 8) + '..';
+                            var fullData = data;
+                            tableHTML += `<td><span class='show-more' onclick="toggleTooltip(this)">${truncatedData}<div class='tooltip' style='visibility: hidden;'>${fullData}</div></span></td>`;
+                        } else {
+                            tableHTML += "<td>" + data + "</td>";
+                        }
+        
+                        tableHTML += "<td>" + cells[5] + "</td>";
+                        tableHTML += "<td>" + cells[6] + "</td>";
+                        if ((cells[8] / cells[7]) > 0) {
+                            tableHTML += "<td><progress value='" + (cells[8] / cells[7]) + "' max='1'></progress></td>";
+                        } else {
+                            tableHTML += "<td></td>";
+                        }
+                        tableHTML += "<td>" + cells[7] + "</td>";
+                        tableHTML += "<td>" + cells[8] + "</td>";
+        
+                        tableHTML += "</tr>";
+                    }
+                    tableHTML += "</table>";
+                    document.getElementById("div_area_table").innerHTML = tableHTML; // Add the table to the HTML element
+        
+                    // Add event listeners to the 'recommend' class links
+                    var aTags = document.getElementsByClassName('recommend');
+                    for (var i = 0; i < aTags.length; i++) {
+                        aTags[i].addEventListener('click', function () {
+                            var aText = this.textContent;
+                            location.href = `/area/table/recommend?data=${encodeURIComponent(aText)}`;
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.log("오류 발생: " + error);
+                });
+        </script>
+        
+        
+    </head>
+    <body>
+        <div class="colorbox" style="width: 100%; height: 70px; margin-top: 2px;">
+            <ul class="nav1">
+                <li>
+                    <div><a href="/area">제주살이</a></div>
+                </li>
+                <li>
+                    <div><a href="/area/table">제주도 주거 추천 지역</a></div>
+                </li>
+                <li>
+                    <div><a href="/institution">장애인 복지 시설</a></div>
+                </li>
+            </ul>
+        </div>
+        <div> <!-- 본문 내용 -->
+            <br><br>
+            <div id="div_table"> <!-- 주거 지역 추천 -->
+                <h2 align="left">장애인 복지 시설</h3><br>
+                <h5 style="text-align:left">* 정원/현원은 데이터 수집일 기준입니다. 자세한 내용은 전화로 문의하시기 바랍니다.</h3>
+                <div id="div_area_table"></div><br>
+            </div>
+        </div>
+    </body>
+    <script src="/js/area_send.js" defer></script>
+</html>
