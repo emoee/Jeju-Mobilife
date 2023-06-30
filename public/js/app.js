@@ -85,7 +85,7 @@ app.get("/job", (req, res) => {
 app.get("/job/jeju", (req, res) => {
   const menuFilePath = path.join(__dirname, 'menu.ejs');
   const template = fs.readFileSync(menuFilePath, 'utf-8');
-  const rendered = ejs.render(template, { name: '' });
+  const rendered = ejs.render(template, { name: '../' });
   const htmlFilePath = path.join(__dirname, '..', 'html', 'job_jeju.html');
   const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
   const finalHtml = rendered + htmlContent;
@@ -185,6 +185,8 @@ app.get('/tour', (req, res) => {
 
     const cssFilePath = '/css/tour.css';
     output += `<link rel="stylesheet" type="text/css" href="${cssFilePath}">`;
+    output += `<div class="footer"><p>이미지출처 : 제주관광공사, Visitjeju.net</p>`
+    output += `<p>아이콘출처 : https://www.freepik.com </p></div>`
     output += '</div></html>';
 
     res.send(rendered + output);
@@ -265,6 +267,8 @@ app.get('/tour', (req, res) => {
         const cssFilePath = '/css/tour.css';
         
         output += `<link rel="stylesheet" type="text/css" href="${cssFilePath}">`;
+        output += `<div class="footer"><p>이미지출처 : 제주관광공사, Visitjeju.net</p>`
+        output += `<p>아이콘출처 : https://www.freepik.com </p></div>`
         output += `</div>`
   
 
