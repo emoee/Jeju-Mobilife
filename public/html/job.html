@@ -24,7 +24,7 @@
             function toggleTooltip(element) {
                 var tooltip = element.querySelector('.tooltip');
                 if (tooltip) {
-                    tooltip.style.visibility = tooltip.style.visibility === 'visible' ? 'hidden' : 'visible';
+                    tooltip.style.visibility = tooltip.style.visibility == 'visible' ? 'hidden' : 'visible';
                 }
             }
             fetch("/data/job_data.csv")
