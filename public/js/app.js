@@ -185,6 +185,8 @@ app.get('/tour', (req, res) => {
 
     const cssFilePath = '/css/tour.css';
     output += `<link rel="stylesheet" type="text/css" href="${cssFilePath}">`;
+    output += `<div class="footer"><p>이미지출처 : 제주관광공사, Visitjeju.net</p>`
+    output += `<p>아이콘출처 : https://www.freepik.com </p></div>`
     output += '</div></html>';
 
     res.send(rendered + output);
@@ -265,6 +267,8 @@ app.get('/tour', (req, res) => {
         const cssFilePath = '/css/tour.css';
         
         output += `<link rel="stylesheet" type="text/css" href="${cssFilePath}">`;
+        output += `<div class="footer"><p>이미지출처 : 제주관광공사, Visitjeju.net</p>`
+        output += `<p>아이콘출처 : https://www.freepik.com </p></div>`
         output += `</div>`
   
 
